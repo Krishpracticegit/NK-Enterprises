@@ -1,0 +1,21 @@
+import express from 'express';
+import {
+  validateCoupon,
+  getCoupons,
+  createCoupon,
+  deleteCoupon
+} from '../controllers/couponController.js';
+import { protect } from '../middleware/auth.js';
+import { adminOnly } from '../middleware/admin.js';
+
+const router = express.Router();
+
+// Public coupon validation endpoint
+router.post('/validate', validateCoupon);
+
+// Admin-only coupon management
+router.get('/', protect, adminOnly, getCoupons);
+router.post('/', protect, adminOnly, createCoupon);
+router.delete('/:id', protect, adminOnly, deleteCoupon);
+
+export default router;

@@ -1,0 +1,347 @@
+@import "tailwindcss";
+
+/* ======================================================
+   NK ENTERPRISES — Unified Theme System
+   CSS custom properties for automatic light/dark switching.
+   ====================================================== */
+
+/* ---------- LIGHT THEME (default) ---------- */
+:root {
+  --color-page:          #FAF8F5;
+  --color-surface:       #FFFFFF;
+  --color-surface-alt:   #F8F6F3;
+  --color-surface-hover: #F1EDE8;
+  --color-text-primary:    #1E293B;
+  --color-text-secondary:  #475569;
+  --color-text-muted:      #94A3B8;
+  --color-brand:         #2D6A75;
+  --color-brand-hover:   #1F4D55;
+  --color-brand-subtle:  rgba(45, 106, 117, 0.08);
+  --color-brand-text:    #2D6A75;
+  --color-accent-text:   #92400E;
+  --color-border:        #E2E8F0;
+  --color-border-subtle: #F1F5F9;
+  --color-input-bg:      #F8FAFC;
+  --color-input-border:  #E2E8F0;
+  --color-input-text:    #1E293B;
+  --color-input-placeholder: #94A3B8;
+  --color-banner-bg:     #2D6A75;
+  --color-subnav-bg:     rgba(255, 251, 235, 0.4);
+  --hero-gradient-from:  #F6F0E6;
+  --hero-gradient-via:   #FAF6EE;
+  --hero-gradient-to:    #EBF5F7;
+  --color-badge-teal-bg:   #F0FDFA;
+  --color-badge-teal-text: #2D6A75;
+  --color-badge-rose-bg:   #FFF1F2;
+  --color-badge-rose-text: #E11D48;
+  --color-badge-amber-bg:  #FFFBEB;
+  --color-badge-amber-text:#D97706;
+  --color-badge-sky-bg:    #F0F9FF;
+  --color-badge-sky-text:  #0284C7;
+}
+
+/* ---------- DARK THEME ---------- */
+.dark {
+  --color-page:          #0C1222;
+  --color-surface:       #151D2E;
+  --color-surface-alt:   #1A2436;
+  --color-surface-hover: #1E2A3E;
+  --color-text-primary:    #F1F5F9;
+  --color-text-secondary:  #CBD5E1;
+  --color-text-muted:      #8896AB;
+  --color-brand:         #3AAFBA;
+  --color-brand-hover:   #4DC5CF;
+  --color-brand-subtle:  rgba(58, 175, 186, 0.15);
+  --color-brand-text:    #5DD8E3;
+  --color-accent-text:   #FCD34D;
+  --color-border:        #283548;
+  --color-border-subtle: #1E2A3E;
+  --color-input-bg:      #1A2436;
+  --color-input-border:  #2D3E55;
+  --color-input-text:    #F1F5F9;
+  --color-input-placeholder: #6B7F96;
+  --color-banner-bg:     #0A0F1C;
+  --color-subnav-bg:     rgba(21, 29, 46, 0.8);
+  --hero-gradient-from:  #0E1726;
+  --hero-gradient-via:   #111B2C;
+  --hero-gradient-to:    #0F1E2A;
+  --color-badge-teal-bg:   rgba(58, 175, 186, 0.15);
+  --color-badge-teal-text: #5DD8E3;
+  --color-badge-rose-bg:   rgba(225, 29, 72, 0.15);
+  --color-badge-rose-text: #FB7185;
+  --color-badge-amber-bg:  rgba(217, 119, 6, 0.15);
+  --color-badge-amber-text:#FBBF24;
+  --color-badge-sky-bg:    rgba(2, 132, 199, 0.15);
+  --color-badge-sky-text:  #38BDF8;
+}
+
+/* ======================================================
+   BASE STYLES
+   ====================================================== */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    background-color: var(--color-page);
+    color: var(--color-text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  h1, h2, h3, .font-heading {
+    font-family: 'Quicksand', 'Plus Jakarta Sans', sans-serif;
+  }
+}
+
+/* ======================================================
+   DARK MODE GLOBAL OVERRIDES
+   
+   Tailwind v4 uses @layer so normal CSS can't override it.
+   We use html.dark as ancestor for maximum specificity,
+   and place rules OUTSIDE @layer so they always win.
+   ====================================================== */
+
+/* --- HEADER / NAVBAR --- */
+html.dark header {
+  background-color: var(--color-surface) !important;
+  border-color: var(--color-border) !important;
+}
+
+html.dark header > div:first-child {
+  /* Top announcement banner */
+  background-color: var(--color-banner-bg) !important;
+}
+
+html.dark header nav {
+  /* Sub-navigation bar */
+  background-color: var(--color-subnav-bg) !important;
+  border-color: var(--color-border) !important;
+}
+
+/* --- BACKGROUNDS --- */
+html.dark .bg-white,
+html.dark .bg-white\/95 {
+  background-color: var(--color-surface) !important;
+}
+
+html.dark .bg-slate-50 {
+  background-color: var(--color-surface-alt) !important;
+}
+
+html.dark .bg-slate-100 {
+  background-color: var(--color-surface-hover) !important;
+}
+
+html.dark [class*="bg-\[\#FAF8F5\]"] {
+  background-color: var(--color-page) !important;
+}
+
+/* --- TEXT COLORS --- */
+html.dark .text-slate-900,
+html.dark .text-slate-800 {
+  color: var(--color-text-primary) !important;
+}
+
+html.dark .text-slate-700,
+html.dark .text-slate-600 {
+  color: var(--color-text-secondary) !important;
+}
+
+html.dark .text-slate-500,
+html.dark .text-slate-400 {
+  color: var(--color-text-muted) !important;
+}
+
+html.dark .text-teal-700 {
+  color: var(--color-brand-text) !important;
+}
+
+html.dark .text-amber-900,
+html.dark .text-amber-800,
+html.dark .text-amber-950,
+html.dark .text-amber-700 {
+  color: var(--color-accent-text) !important;
+}
+
+/* Brand text color override for [#2D6A75] */
+html.dark [class*="text-\[\#2D6A75\]"] {
+  color: var(--color-brand-text) !important;
+}
+
+/* --- BORDERS --- */
+html.dark .border-slate-100,
+html.dark .border-slate-200,
+html.dark .border-slate-300 {
+  border-color: var(--color-border) !important;
+}
+
+html.dark .border-amber-100,
+html.dark .border-amber-200,
+html.dark [class*="border-amber-100"],
+html.dark [class*="border-amber-200"] {
+  border-color: var(--color-border) !important;
+}
+
+html.dark .border-teal-200 {
+  border-color: rgba(58, 175, 186, 0.3) !important;
+}
+
+html.dark [class*="border-white"] {
+  border-color: var(--color-border) !important;
+}
+
+/* --- GRADIENT HERO --- */
+html.dark [class*="from-\[\#F6F0E6\]"] {
+  background: linear-gradient(
+    to right,
+    var(--hero-gradient-from),
+    var(--hero-gradient-via),
+    var(--hero-gradient-to)
+  ) !important;
+}
+
+/* --- LIGHT-COLORED BACKGROUND BADGES --- */
+html.dark .bg-teal-50,
+html.dark .bg-teal-100,
+html.dark [class*="bg-teal-50"] {
+  background-color: var(--color-badge-teal-bg) !important;
+}
+
+html.dark .bg-rose-50 {
+  background-color: var(--color-badge-rose-bg) !important;
+}
+
+html.dark .bg-amber-50,
+html.dark [class*="bg-amber-50"] {
+  background-color: var(--color-badge-amber-bg) !important;
+}
+
+html.dark .bg-sky-50 {
+  background-color: var(--color-badge-sky-bg) !important;
+}
+
+html.dark .bg-emerald-100,
+html.dark .bg-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.15) !important;
+}
+
+/* Teal text inside badges */
+html.dark .bg-teal-50 + div .text-slate-900,
+html.dark .bg-teal-50 ~ div .text-slate-900 {
+  color: var(--color-text-primary) !important;
+}
+
+/* Brand teal background buttons */
+html.dark [class*="bg-\[\#2D6A75\]"] {
+  background-color: var(--color-brand) !important;
+}
+html.dark [class*="bg-\[\#2D6A75\]"]:hover,
+html.dark [class*="hover\:bg-\[\#1F4D55\]"]:hover {
+  background-color: var(--color-brand-hover) !important;
+}
+
+/* Brand subtle background */
+html.dark [class*="bg-\[\#2D6A75\]\/10"] {
+  background-color: var(--color-brand-subtle) !important;
+}
+
+/* --- FORM CONTROLS --- */
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background-color: var(--color-input-bg) !important;
+  color: var(--color-input-text) !important;
+  border-color: var(--color-input-border) !important;
+}
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: var(--color-input-placeholder) !important;
+}
+html.dark input:focus,
+html.dark select:focus,
+html.dark textarea:focus {
+  border-color: var(--color-brand) !important;
+  box-shadow: 0 0 0 3px var(--color-brand-subtle) !important;
+}
+
+/* --- HOVER STATES --- */
+html.dark .hover\:bg-slate-50:hover,
+html.dark .hover\:bg-slate-100:hover {
+  background-color: var(--color-surface-hover) !important;
+}
+
+html.dark .hover\:bg-amber-100:hover {
+  background-color: var(--color-badge-amber-bg) !important;
+}
+
+html.dark .hover\:bg-rose-50:hover {
+  background-color: var(--color-badge-rose-bg) !important;
+}
+
+html.dark .hover\:text-\[\#2D6A75\]:hover {
+  color: var(--color-brand-text) !important;
+}
+
+html.dark .group:hover .group-hover\:text-\[\#2D6A75\] {
+  color: var(--color-brand-text) !important;
+}
+
+html.dark .group:hover .group-hover\:bg-\[\#2D6A75\] {
+  background-color: var(--color-brand) !important;
+}
+
+/* --- SHADOWS --- */
+html.dark .shadow-xl,
+html.dark .shadow-lg,
+html.dark .shadow-md,
+html.dark .shadow-2xl {
+  --tw-shadow-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* --- FOOTER --- */
+html.dark footer {
+  background-color: var(--color-surface) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text-secondary) !important;
+}
+
+/* Store card in footer */
+html.dark [class*="bg-amber-50\/60"] {
+  background-color: rgba(26, 36, 54, 0.8) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text-secondary) !important;
+}
+
+/* --- DROPDOWN MENUS --- */
+html.dark .animate-in {
+  background-color: var(--color-surface) !important;
+  border-color: var(--color-border) !important;
+}
+
+/* Rose text (logout, admin) stays visible */
+html.dark .text-rose-600 {
+  color: #FB7185 !important;
+}
+
+/* --- SCROLLBAR --- */
+html.dark ::-webkit-scrollbar {
+  width: 8px;
+}
+html.dark ::-webkit-scrollbar-track {
+  background: var(--color-page);
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 9999px;
+}
+
+/* ======================================================
+   CUSTOM ANIMATION
+   ====================================================== */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 6s linear infinite;
+}
