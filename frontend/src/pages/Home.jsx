@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import API from '../services/api.js';
 import ProductCard from '../components/product/ProductCard.jsx';
 import { 
@@ -49,6 +50,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-slate-800 flex flex-col justify-between">
+      <Helmet>
+        <title>NK Enterprises - Premium & Certified Safe Baby Care</title>
+        <meta 
+          name="description" 
+          content="Discover 100% organic apparel, safety-certified nursery furniture, dermatologist-tested baby skincare, and BPA-free feeding gear at NK Enterprises." 
+        />
+      </Helmet>
       {/* Main Content */}
       <main className="flex-1 space-y-12 pb-16">
         {/* Hero Section */}
@@ -87,6 +95,9 @@ export default function Home() {
                   src="/images/hero.jpg" 
                   alt="NK Enterprises Baby Nursery" 
                   className="w-full h-80 sm:h-96 object-cover"
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
                 />
               </div>
               <div className="absolute -bottom-4 -left-4 bg-white p-4 rounded-2xl shadow-xl border border-amber-100 flex items-center gap-3">

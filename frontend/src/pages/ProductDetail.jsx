@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import API from '../services/api.js';
 import ProductCard from '../components/product/ProductCard.jsx';
 import { useCart } from '../context/CartContext.jsx';
@@ -101,27 +102,20 @@ export default function ProductDetail() {
       // Refresh reviews & product data for updated rating
       fetchReviews(product._id);
       API.get(`/products/${slug}`).then((res) => setProduct(res.data));
-    } catch (err) {
-      setReviewError(err.response?.data?.message || 'Failed to submit review.');
-      setSubmittingReview(false);
-    }
-  };
-
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-slate-400 gap-2">
-        <RefreshCw className="animate-spin" size={24} />
-        <span>Loading product details...</span>
+      <div className="max-w-7xl mx-auto px-4 py-16 flex items-center justify-center text-slate-400">
+        Loading product...
       </div>
     );
   }
 
   if (!product) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-16 text-center space-y-4">
-        <h2 className="text-2xl font-bold font-heading text-slate-900">Product Not Found</h2>
-        <Link to="/products" className="text-[#2D6A75] font-semibold underline inline-flex items-center gap-1">
-          <ArrowLeft size={16} /> Back to products
+      <div className="max-w-7xl mx-auto px-4 py-16 text-center">
+        <h2 className="text-2xl font-bold text-slate-800">Product Not Found</h2>
+        <Link to="/products" className="text-[#2D6A75] hover:underline mt-2 inline-block">
+          Back to all products
         </Link>
       </div>
     );
@@ -129,22 +123,27 @@ export default function ProductDetail() {
 
   const isLiked = isInWishlist(product._id);
   const finalPrice = product.discountPrice > 0 ? product.discountPrice : product.price;
-  const originalPrice = product.discountPrice > 0 ? product.price : null;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
-      <Link to="/products" className="text-slate-500 hover:text-[#2D6A75] text-sm font-semibold inline-flex items-center gap-2">
-        <ArrowLeft size={16} /> Back to Products
-      </Link>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <Helmet>
+        <title>{`${product.name} | NK Enterprises Baby Care`}</title>
+        <meta 
+          name="description" 
+          content={product.description ? product.description.slice(0, 155) : `Buy ${product.name} at NK Enterprises. Safety certified & organic.`} 
+        />
+      </Helmet>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Gallery */}
         <div className="space-y-4">
           <div className="aspect-4/3 rounded-3xl overflow-hidden bg-slate-100 border border-slate-200 shadow-sm relative">
             <img 
-              src={product.images?.[activeImage] || '/images/hero.jpg'} 
+              src={getOptimizedImageUrl(product.images?.[activeImage] || '/images/hero.jpg', 800)} 
               alt={product.name}
               className="w-full h-full object-cover"
+              loading="eager"
+              decoding="async"
             />
             {product.ageGroup && (
               <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#2D6A75] text-xs font-bold px-3 py-1 rounded-full shadow-xs">
@@ -161,7 +160,7 @@ export default function ProductDetail() {
                   onClick={() => setActiveImage(idx)}
                   className={`w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all flex-shrink-0 ${activeImage === idx ? 'border-[#2D6A75] scale-105 shadow-md' : 'border-slate-200 opacity-70'}`}
                 >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
+                  <img src={getOptimizedImageUrl(img, 160)} alt="" className="w-full h-full object-cover" decoding="async" />
                 </button>
               ))}
             </div>

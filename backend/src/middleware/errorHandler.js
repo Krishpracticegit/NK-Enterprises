@@ -5,12 +5,18 @@ export const notFoundHandler = (req, res, next) => {
   next(error);
 };
 
-// Global Error Handler Middleware (wired as last middleware in server.js)
+// Global Error Handler Middleware (wired as last middleware in app.js)
 export const errorHandler = (err, req, res, next) => {
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
 
-  res.status(statusCode).json({
-    message: err.message || 'Internal Server Error',
-    stack: process.env.NODE_ENV === 'production' ? null : err.stack
-  });
+  const response = {
+    message: err.message || 'Internal Server Error'
+  };
+
+  // Strictly exclude stack trace from production error responses
+  if (process.env.NODE_ENV !== 'production') {
+    response.stack = err.stack;
+  }
+
+  res.status(statusCode).json(response);
 };

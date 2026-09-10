@@ -3,6 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom';
 import API from '../services/api.js';
 import { useCart } from '../context/CartContext.jsx';
 import { Search, Filter, Star, ShoppingBag, Heart, RefreshCw } from 'lucide-react';
+import { getOptimizedImageUrl } from '../utils/imageUtils.js';
 
 export default function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -162,9 +163,11 @@ export default function Products() {
                 >
                   <div className="relative aspect-4/3 overflow-hidden bg-slate-50">
                     <img 
-                      src={prod.images?.[0] || '/images/hero.jpg'} 
+                      src={getOptimizedImageUrl(prod.images?.[0] || '/images/hero.jpg', 400)} 
                       alt={prod.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                      decoding="async"
                     />
                     <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-[#2D6A75] text-xs font-bold px-3 py-1 rounded-full shadow-xs">
                       {prod.ageGroup}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.jsx';
 import { CartProvider } from './context/CartContext.jsx';
@@ -10,38 +10,47 @@ import Footer from './components/layout/Footer.jsx';
 import ProtectedRoute from './components/common/ProtectedRoute.jsx';
 import AdminRoute from './components/common/AdminRoute.jsx';
 import AdminLayout from './components/admin/AdminLayout.jsx';
+import { RefreshCw } from 'lucide-react';
 
-// Public & Customer Pages
-import Home from './pages/Home.jsx';
-import ProductListing from './pages/ProductListing.jsx';
-import ProductDetail from './pages/ProductDetail.jsx';
-import Cart from './pages/Cart.jsx';
-import Wishlist from './pages/Wishlist.jsx';
-import Checkout from './pages/Checkout.jsx';
-import OrderConfirmation from './pages/OrderConfirmation.jsx';
-import Login from './pages/Login.jsx';
-import Register from './pages/Register.jsx';
-import Profile from './pages/Profile.jsx';
-import OrderHistory from './pages/OrderHistory.jsx';
-import OrderDetail from './pages/OrderDetail.jsx';
-import StoreInfo from './pages/StoreInfo.jsx';
+// Lazy-loaded Storefront & Auth Pages
+const Home = lazy(() => import('./pages/Home.jsx'));
+const ProductListing = lazy(() => import('./pages/ProductListing.jsx'));
+const ProductDetail = lazy(() => import('./pages/ProductDetail.jsx'));
+const Cart = lazy(() => import('./pages/Cart.jsx'));
+const Wishlist = lazy(() => import('./pages/Wishlist.jsx'));
+const Checkout = lazy(() => import('./pages/Checkout.jsx'));
+const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation.jsx'));
+const Login = lazy(() => import('./pages/Login.jsx'));
+const Register = lazy(() => import('./pages/Register.jsx'));
+const Profile = lazy(() => import('./pages/Profile.jsx'));
+const OrderHistory = lazy(() => import('./pages/OrderHistory.jsx'));
+const OrderDetail = lazy(() => import('./pages/OrderDetail.jsx'));
+const StoreInfo = lazy(() => import('./pages/StoreInfo.jsx'));
 
-// Admin Control Panel Pages
-import Dashboard from './pages/admin/Dashboard.jsx';
-import ManageProducts from './pages/admin/ManageProducts.jsx';
-import ManageCategories from './pages/admin/ManageCategories.jsx';
-import ManageOrders from './pages/admin/ManageOrders.jsx';
+// Lazy-loaded Admin Control Panel Pages
+const Dashboard = lazy(() => import('./pages/admin/Dashboard.jsx'));
+const ManageProducts = lazy(() => import('./pages/admin/ManageProducts.jsx'));
+const ManageCategories = lazy(() => import('./pages/admin/ManageCategories.jsx'));
+const ManageOrders = lazy(() => import('./pages/admin/ManageOrders.jsx'));
+
+const PageLoader = () => (
+  <div className="min-h-[60vh] flex items-center justify-center text-[#2D6A75] gap-2 font-medium">
+    <RefreshCw size={24} className="animate-spin" />
+    <span>Loading...</span>
+  </div>
+);
 
 export default function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <CartProvider>
-          <WishlistProvider>
-            <Router>
-                <div className="min-h-screen bg-[#FAF8F5] text-slate-800 flex flex-col justify-between antialiased font-['Plus_Jakarta_Sans',sans-serif]">
-                  <Navbar />
-                  <main className="flex-1">
+        <Router>
+          <CartProvider>
+            <WishlistProvider>
+              <div className="min-[#FAF8F5] min-h-screen bg-[#FAF8F5] text-slate-800 flex flex-col justify-between antialiased font-['Plus_Jakarta_Sans',sans-serif]">
+                <Navbar />
+                <main className="flex-1">
+                  <Suspense fallback={<PageLoader />}>
                     <Routes>
                       {/* Storefront Routes */}
                       <Route path="/" element={<Home />} />
@@ -104,25 +113,28 @@ export default function App() {
                         element={
                           <AdminRoute>
                             <AdminLayout>
-                              <Routes>
-                                <Route path="" element={<Navigate to="dashboard" replace />} />
-                                <Route path="dashboard" element={<Dashboard />} />
-                                <Route path="products" element={<ManageProducts />} />
-                                <Route path="categories" element={<ManageCategories />} />
-                                <Route path="orders" element={<ManageOrders />} />
-                              </Routes>
+                              <Suspense fallback={<PageLoader />}>
+                                <Routes>
+                                  <Route path="" element={<Navigate to="dashboard" replace />} />
+                                  <Route path="dashboard" element={<Dashboard />} />
+                                  <Route path="products" element={<ManageProducts />} />
+                                  <Route path="categories" element={<ManageCategories />} />
+                                  <Route path="orders" element={<ManageOrders />} />
+                                </Routes>
+                              </Suspense>
                             </AdminLayout>
                           </AdminRoute>
                         }
                       />
                     </Routes>
-                  </main>
-                  <Footer />
-                </div>
-              </Router>
+                  </Suspense>
+                </main>
+                <Footer />
+              </div>
             </WishlistProvider>
           </CartProvider>
-        </AuthProvider>
+        </Router>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

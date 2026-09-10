@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext.jsx';
 import { useWishlist } from '../../context/WishlistContext.jsx';
 import { Star, ShoppingBag, Heart } from 'lucide-react';
+import { getOptimizedImageUrl } from '../../utils/imageUtils.js';
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
@@ -15,16 +16,20 @@ export default function ProductCard({ product }) {
     ? Math.round(((originalPrice - finalPrice) / originalPrice) * 100)
     : null;
 
+  const rawImage = product.images?.[0] || '/images/hero.jpg';
+
   return (
     <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
       {/* Image Container */}
       <div className="relative aspect-4/3 overflow-hidden bg-slate-50">
         <img
-          src={product.images?.[0] || '/images/hero.jpg'}
+          src={getOptimizedImageUrl(rawImage, 400)}
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           loading="lazy"
+          decoding="async"
         />
+
         
         {/* Badges */}
         <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 z-10">

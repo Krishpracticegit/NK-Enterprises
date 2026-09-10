@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import CartAddModal from '../components/cart/CartAddModal.jsx';
 
 const CartContext = createContext();
 
@@ -8,14 +9,22 @@ export const CartProvider = ({ children }) => {
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
+  const [recentAddedItem, setRecentAddedItem] = useState(null);
+
+  const handleCloseModal = useCallback(() => {
+    setRecentAddedItem(null);
+  }, []);
+
   useEffect(() => {
     localStorage.setItem('nk_cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
   const addToCart = (product, quantity = 1) => {
+    const unitPrice = product.discountPrice > 0 ? product.discountPrice : product.price;
+    const itemImage = product.images?.[0] || '/images/hero.jpg';
+
     setCartItems((prevItems) => {
       const existingIndex = prevItems.findIndex((item) => item.product._id === product._id);
-      const unitPrice = product.discountPrice > 0 ? product.discountPrice : product.price;
 
       if (existingIndex > -1) {
         const updated = [...prevItems];
@@ -29,10 +38,19 @@ export const CartProvider = ({ children }) => {
             quantity,
             name: product.name,
             price: unitPrice,
-            image: product.images?.[0] || '/images/hero.jpg'
+            image: itemImage
           }
         ];
       }
+    });
+
+    // Set popup state for direct "Move to Cart" notification
+    setRecentAddedItem({
+      id: Date.now(),
+      name: product.name,
+      price: unitPrice,
+      quantity,
+      image: itemImage
     });
   };
 
@@ -76,8 +94,20 @@ export const CartProvider = ({ children }) => {
       }}
     >
       {children}
+
+      {/* Direct Move to Cart Pop-Up Notification */}
+      {recentAddedItem && (
+        <CartAddModal
+          key={recentAddedItem.id}
+          item={recentAddedItem}
+          itemCount={itemCount}
+          subtotal={subtotal}
+          onClose={handleCloseModal}
+        />
+      )}
     </CartContext.Provider>
   );
 };
+
 
 export const useCart = () => useContext(CartContext);

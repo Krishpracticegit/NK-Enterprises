@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import API from '../services/api.js';
 import ProductCard from '../components/product/ProductCard.jsx';
 import { 
@@ -35,6 +36,16 @@ export default function ProductListing() {
   // Price range state
   const [minPriceInput, setMinPriceInput] = useState(currentMinPrice);
   const [maxPriceInput, setMaxPriceInput] = useState(currentMaxPrice);
+
+  const pageTitle = currentCategory 
+    ? `${currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)} - Baby Care | NK Enterprises`
+    : currentSearch 
+    ? `Search Results for "${currentSearch}" | NK Enterprises`
+    : `All Baby Products - Nursery, Apparel & Care | NK Enterprises`;
+
+  const pageDescription = currentCategory
+    ? `Explore certified safe and organic ${currentCategory} essentials for your baby at NK Enterprises. Top quality & pediatrician approved.`
+    : `Browse our complete collection of certified organic baby clothing, cribs, skincare, and feeding gear at NK Enterprises.`;
 
   useEffect(() => {
     // Fetch categories for sidebar filter
@@ -101,6 +112,10 @@ export default function ProductListing() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+      </Helmet>
       {/* Header & Mobile Filter Toggle */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
         <div>

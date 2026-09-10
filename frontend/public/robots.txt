@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /checkout
+Disallow: /order-confirmation
+Disallow: /orders
+Disallow: /profile
+
+Sitemap: https://nkenterprises.com/sitemap.xml

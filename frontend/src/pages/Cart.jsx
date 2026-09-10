@@ -61,6 +61,7 @@ export default function Cart() {
                   src={item.image} 
                   alt={item.name}
                   className="w-20 h-20 object-cover rounded-xl border border-slate-100 flex-shrink-0"
+                  loading="lazy"
                 />
                 <div>
                   <Link to={`/products/${item.product.slug}`} className="font-bold text-slate-900 text-sm sm:text-base hover:text-[#2D6A75] transition-colors line-clamp-2">

@@ -31,8 +31,11 @@ export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  // Debounced search (~400ms)
+  // Debounced search (~400ms) - only trigger if query differs from active URL search param
   useEffect(() => {
+    const activeSearch = searchParams.get('search') || '';
+    if (searchQuery.trim() === activeSearch.trim()) return;
+
     const handler = setTimeout(() => {
       if (searchQuery.trim()) {
         navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
@@ -42,7 +45,8 @@ export default function Navbar() {
     }, 400);
 
     return () => clearTimeout(handler);
-  }, [searchQuery]);
+  }, [searchQuery, searchParams, navigate]);
+
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
