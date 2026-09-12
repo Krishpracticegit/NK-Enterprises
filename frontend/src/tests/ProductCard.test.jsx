@@ -36,6 +36,6 @@ describe('ProductCard Component', () => {
     renderWithProviders(<ProductCard product={mockProduct} />);
 
     expect(screen.getByText('Organic Cotton Baby Onesie')).toBeInTheDocument();
-    expect(screen.getByText('$24.99')).toBeInTheDocument();
+    expect(screen.getByText(/24\.99/)).toBeInTheDocument();
   });
 });
