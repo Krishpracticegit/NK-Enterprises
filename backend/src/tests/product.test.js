@@ -12,7 +12,7 @@ let customerToken;
 let categoryId;
 
 beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create({ binary: { version: '4.4.18' } });
+  mongoServer = await MongoMemoryServer.create();
   const uri = mongoServer.getUri();
   await mongoose.connect(uri);
 }, 300000);
