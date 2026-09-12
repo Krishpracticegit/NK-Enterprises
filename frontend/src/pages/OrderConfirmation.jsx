@@ -49,10 +49,10 @@ export default function OrderConfirmation() {
                 <img src={item.image || '/images/hero.jpg'} alt="" className="w-12 h-12 object-cover rounded-xl border" />
                 <div>
                   <p className="font-bold text-slate-900">{item.name}</p>
-                  <p className="text-xs text-slate-400">Qty: {item.quantity} × ${item.price}</p>
+                  <p className="text-xs text-slate-400">Qty: {item.quantity} × ₹{item.price?.toLocaleString('en-IN')}</p>
                 </div>
               </div>
-              <span className="font-bold text-slate-900">${(item.price * item.quantity).toFixed(2)}</span>
+              <span className="font-bold text-slate-900">₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
             </div>
           ))}
         </div>
@@ -72,7 +72,7 @@ export default function OrderConfirmation() {
               <CreditCard size={14} className="text-[#2D6A75]" /> Payment Details
             </span>
             <p className="font-bold text-slate-900">Method: {orderData.paymentMethod}</p>
-            <p className="text-slate-600">Total Paid: <strong className="text-[#2D6A75] text-sm">${orderData.totalPrice?.toFixed(2)}</strong></p>
+            <p className="text-slate-600">Total Paid: <strong className="text-[#2D6A75] text-sm">₹{orderData.totalPrice?.toLocaleString('en-IN')}</strong></p>
           </div>
         </div>
       </div>

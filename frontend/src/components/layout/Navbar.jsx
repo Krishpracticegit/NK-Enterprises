@@ -61,7 +61,7 @@ export default function Navbar() {
       <div className="bg-[#2D6A75] text-white text-xs md:text-sm py-2 px-4 text-center font-medium tracking-wide flex items-center justify-center gap-2">
         <Sparkles size={15} className="text-amber-300 animate-pulse" />
         <span>Welcome to <strong>NK ENTERPRISES</strong> — Premium & Certified Safe Baby Care</span>
-        <span className="hidden sm:inline opacity-75">| Free Standard Shipping on Orders $50+</span>
+        <span className="hidden sm:inline opacity-75">| Free Standard Shipping on Orders ₹999+</span>
         <Link to="/store-info" className="ml-2 underline text-amber-200 hover:text-white text-xs flex items-center gap-1">
           <MapPin size={13} /> Visit Our Store
         </Link>
@@ -245,11 +245,11 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto flex items-center justify-start md:justify-center gap-8 text-xs sm:text-sm font-semibold text-slate-700 whitespace-nowrap">
           <Link to="/" className="hover:text-[#2D6A75] transition-colors">Home</Link>
           <Link to="/products" className="hover:text-[#2D6A75] transition-colors">All Baby Products</Link>
-          <Link to="/products?category=nursery" className="hover:text-[#2D6A75] transition-colors">Nursery & Cribs</Link>
-          <Link to="/products?category=clothing" className="hover:text-[#2D6A75] transition-colors">Organic Apparel</Link>
-          <Link to="/products?category=feeding" className="hover:text-[#2D6A75] transition-colors">Feeding & Gear</Link>
-          <Link to="/products?category=strollers" className="hover:text-[#2D6A75] transition-colors">Strollers & Travel</Link>
-          <Link to="/products?category=care" className="hover:text-[#2D6A75] transition-colors">Bath & Skincare</Link>
+          <Link to="/products?category=baby-furniture" className="hover:text-[#2D6A75] transition-colors">Nursery & Furniture</Link>
+          <Link to="/products?category=baby-clothing" className="hover:text-[#2D6A75] transition-colors">Organic Apparel</Link>
+          <Link to="/products?category=feeding-nursing" className="hover:text-[#2D6A75] transition-colors">Feeding & Gear</Link>
+          <Link to="/products?category=strollers-travel" className="hover:text-[#2D6A75] transition-colors">Strollers & Travel</Link>
+          <Link to="/products?category=bath-skincare" className="hover:text-[#2D6A75] transition-colors">Bath & Skincare</Link>
           <Link to="/store-info" className="text-amber-800 hover:text-amber-900 font-bold flex items-center gap-1">
             <MapPin size={13} /> Visit Our Store
           </Link>

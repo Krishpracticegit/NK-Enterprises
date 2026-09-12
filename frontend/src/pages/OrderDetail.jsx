@@ -156,10 +156,10 @@ export default function OrderDetail() {
                 <img src={item.image || '/images/hero.jpg'} alt="" className="w-16 h-16 object-cover rounded-2xl border" />
                 <div>
                   <h4 className="font-bold text-slate-900">{item.name}</h4>
-                  <p className="text-xs text-slate-500">Unit Price: ${item.price} • Quantity: {item.quantity}</p>
+                  <p className="text-xs text-slate-500">Unit Price: ₹{item.price?.toLocaleString('en-IN')} • Quantity: {item.quantity}</p>
                 </div>
               </div>
-              <span className="font-extrabold text-slate-900">${(item.price * item.quantity).toFixed(2)}</span>
+              <span className="font-extrabold text-slate-900">₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
             </div>
           ))}
         </div>
@@ -184,15 +184,15 @@ export default function OrderDetail() {
           <div className="space-y-1 text-slate-600">
             <div className="flex justify-between">
               <span>Items Subtotal:</span>
-              <span className="font-bold text-slate-900">${order.itemsPrice?.toFixed(2)}</span>
+              <span className="font-bold text-slate-900">₹{order.itemsPrice?.toLocaleString('en-IN')}</span>
             </div>
             <div className="flex justify-between">
               <span>Shipping Fee:</span>
-              <span className="font-bold text-slate-900">${order.shippingPrice?.toFixed(2)}</span>
+              <span className="font-bold text-slate-900">₹{order.shippingPrice?.toLocaleString('en-IN')}</span>
             </div>
             <div className="flex justify-between pt-2 border-t text-sm font-extrabold text-slate-900">
               <span>Total Amount:</span>
-              <span className="text-[#2D6A75]">${order.totalPrice?.toFixed(2)}</span>
+              <span className="text-[#2D6A75]">₹{order.totalPrice?.toLocaleString('en-IN')}</span>
             </div>
           </div>
         </div>

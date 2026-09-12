@@ -99,10 +99,10 @@ export default function OrderHistory() {
                     <img src={item.image || '/images/hero.jpg'} alt="" className="w-12 h-12 object-cover rounded-xl border border-slate-100" />
                     <div>
                       <p className="font-bold text-slate-900 line-clamp-1">{item.name}</p>
-                      <p className="text-xs text-slate-400">Qty: {item.quantity} × ${item.price}</p>
+                      <p className="text-xs text-slate-400">Qty: {item.quantity} × ₹{item.price?.toLocaleString('en-IN')}</p>
                     </div>
                   </div>
-                  <span className="font-bold text-slate-900">${(item.price * item.quantity).toFixed(2)}</span>
+                  <span className="font-bold text-slate-900">₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
                 </div>
               ))}
             </div>
@@ -110,7 +110,7 @@ export default function OrderHistory() {
             {/* Footer & Link */}
             <div className="flex items-center justify-between pt-4 border-t border-slate-100 text-sm">
               <span className="text-lg font-extrabold text-slate-900">
-                Total: <span className="text-[#2D6A75]">${order.totalPrice.toFixed(2)}</span>
+                Total: <span className="text-[#2D6A75]">₹{order.totalPrice?.toLocaleString('en-IN')}</span>
               </span>
 
               <Link

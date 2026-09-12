@@ -29,9 +29,9 @@ export default function Footer() {
             <h4 className="font-bold text-sm text-slate-900 uppercase tracking-wider mb-4">Quick Links</h4>
             <ul className="space-y-2.5 text-sm">
               <li><Link to="/products" className="hover:text-[#2D6A75] transition-colors">Shop All Products</Link></li>
-              <li><Link to="/products?category=nursery" className="hover:text-[#2D6A75] transition-colors">Nursery Essentials</Link></li>
-              <li><Link to="/products?category=clothing" className="hover:text-[#2D6A75] transition-colors">Organic Apparel</Link></li>
-              <li><Link to="/products?category=care" className="hover:text-[#2D6A75] transition-colors">Baby Skincare</Link></li>
+              <li><Link to="/products?category=baby-furniture" className="hover:text-[#2D6A75] transition-colors">Nursery Essentials</Link></li>
+              <li><Link to="/products?category=baby-clothing" className="hover:text-[#2D6A75] transition-colors">Organic Apparel</Link></li>
+              <li><Link to="/products?category=bath-skincare" className="hover:text-[#2D6A75] transition-colors">Baby Skincare</Link></li>
               <li><Link to="/store-info" className="text-[#2D6A75] font-bold hover:underline flex items-center gap-1">Visit Our Store</Link></li>
             </ul>
           </div>

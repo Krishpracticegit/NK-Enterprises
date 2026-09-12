@@ -23,7 +23,7 @@ export default function ProductCard({ product }) {
       {/* Image Container */}
       <div className="relative aspect-4/3 overflow-hidden bg-slate-50">
         <img
-          src={getOptimizedImageUrl(rawImage, 400)}
+          src={getOptimizedImageUrl(rawImage, 400, product.name, product.category?.name)}
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           loading="lazy"
@@ -77,10 +77,10 @@ export default function ProductCard({ product }) {
         <div className="flex items-center justify-between pt-2 border-t border-slate-100">
           <div>
             <span className="text-lg sm:text-xl font-extrabold text-slate-900">
-              ${finalPrice}
+              ₹{finalPrice?.toLocaleString('en-IN') || finalPrice}
             </span>
             {originalPrice && (
-              <span className="text-xs text-slate-400 line-through ml-1.5">${originalPrice}</span>
+              <span className="text-xs text-slate-400 line-through ml-1.5">₹{originalPrice?.toLocaleString('en-IN') || originalPrice}</span>
             )}
           </div>
           <button

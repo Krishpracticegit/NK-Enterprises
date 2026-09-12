@@ -21,12 +21,34 @@ export const getProducts = async (req, res, next) => {
 
     const filter = {};
 
-    // Category Filter (support Category ObjectId or Slug)
+    // Category Filter (support Category ObjectId, Slug, or Alias Slugs)
     if (category) {
-      if (category.match(/^[0-9a-fA-F]{24}$/)) {
-        filter.category = category;
+      const aliasMap = {
+        'strollers': 'strollers-travel',
+        'strollers-travel': 'strollers-travel',
+        'nursery': 'baby-furniture',
+        'nursery-cribs': 'baby-furniture',
+        'baby-furniture': 'baby-furniture',
+        'furniture': 'baby-furniture',
+        'apparel': 'baby-clothing',
+        'organic-apparel': 'baby-clothing',
+        'baby-clothing': 'baby-clothing',
+        'clothing': 'baby-clothing',
+        'feeding': 'feeding-nursing',
+        'feeding-gear': 'feeding-nursing',
+        'feeding-nursing': 'feeding-nursing',
+        'bath': 'bath-skincare',
+        'bath-skincare': 'bath-skincare'
+      };
+
+      const targetSlug = aliasMap[category.toLowerCase()] || category;
+
+      if (targetSlug.match(/^[0-9a-fA-F]{24}$/)) {
+        filter.category = targetSlug;
       } else {
-        const cat = await Category.findOne({ slug: category });
+        const cat = await Category.findOne({ 
+          $or: [{ slug: targetSlug }, { slug: category }] 
+        });
         if (cat) {
           filter.category = cat._id;
         } else {

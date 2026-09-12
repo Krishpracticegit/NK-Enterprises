@@ -48,7 +48,7 @@ export default function Checkout() {
   const [couponLoading, setCouponLoading] = useState(false);
   const [couponMessage, setCouponMessage] = useState('');
 
-  const shippingPrice = subtotal >= 50 ? 0 : 5.99;
+  const shippingPrice = subtotal >= 999 ? 0 : 99;
   const discountAmount = appliedCoupon ? appliedCoupon.discountAmount : 0;
   const totalPrice = Math.max(0, subtotal + shippingPrice - discountAmount);
 
@@ -58,12 +58,12 @@ export default function Checkout() {
     const addr = user.addresses[index];
     if (addr) {
       setShippingAddress({
-        line1: addr.line1,
-        line2: addr.line2 || '',
-        city: addr.city,
-        state: addr.state,
-        pincode: addr.pincode,
-        phone: addr.phone
+        fullName: addr.fullName || '',
+        streetAddress: addr.streetAddress || '',
+        city: addr.city || '',
+        state: addr.state || '',
+        postalCode: addr.postalCode || '',
+        phone: addr.phone || ''
       });
     }
   };
@@ -83,7 +83,7 @@ export default function Checkout() {
 
       if (res.data.valid) {
         setAppliedCoupon(res.data);
-        setCouponMessage(`${res.data.code} applied! Saved $${res.data.discountAmount}`);
+        setCouponMessage(`${res.data.code} applied! Saved ₹${res.data.discountAmount}`);
       }
       setCouponLoading(false);
     } catch (err) {
@@ -427,23 +427,23 @@ export default function Checkout() {
           <div className="border-t border-slate-100 pt-4 space-y-2 text-xs text-slate-600">
             <div className="flex justify-between">
               <span>Subtotal</span>
-              <span className="font-bold text-slate-900">${subtotal.toFixed(2)}</span>
+              <span className="font-bold text-slate-900">₹{subtotal.toLocaleString('en-IN')}</span>
             </div>
             <div className="flex justify-between">
               <span>Shipping Fee</span>
-              <span className="font-bold text-slate-900">{shippingPrice === 0 ? 'FREE' : `$${shippingPrice}`}</span>
+              <span className="font-bold text-slate-900">{shippingPrice === 0 ? 'FREE' : `₹${shippingPrice}`}</span>
             </div>
             {appliedCoupon && (
               <div className="flex justify-between text-emerald-700 font-bold">
                 <span>Coupon Discount ({appliedCoupon.code})</span>
-                <span>-${discountAmount.toFixed(2)}</span>
+                <span>-₹{discountAmount.toLocaleString('en-IN')}</span>
               </div>
             )}
           </div>
 
           <div className="border-t border-slate-100 pt-3 flex justify-between text-base font-extrabold text-slate-900">
             <span>Total Payable</span>
-            <span className="text-[#2D6A75] text-xl">${totalPrice.toFixed(2)}</span>
+            <span className="text-[#2D6A75] text-xl">₹{totalPrice.toLocaleString('en-IN')}</span>
           </div>
 
           <button
@@ -459,7 +459,7 @@ export default function Checkout() {
             ) : (
               <>
                 <Lock size={16} />
-                <span>Pay Now — ${totalPrice.toFixed(2)}</span>
+                <span>Pay Now — ₹{totalPrice.toLocaleString('en-IN')}</span>
               </>
             )}
           </button>

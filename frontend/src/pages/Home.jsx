@@ -16,37 +16,40 @@ import {
 
 export default function Home() {
   const [categories, setCategories] = useState([]);
-  const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch real categories from API
+    // Fetch categories
     API.get('/categories')
       .then((res) => setCategories(res.data || []))
       .catch((err) => console.error('Failed to fetch categories:', err));
 
-    // Fetch featured products from API
-    API.get('/products?isFeatured=true&limit=8')
+    // Fetch all products to group into sections
+    API.get('/products?limit=100')
       .then((res) => {
-        setFeaturedProducts(res.data.products || []);
+        setAllProducts(res.data.products || []);
         setLoading(false);
       })
       .catch((err) => {
-        console.error('Failed to fetch featured products:', err);
+        console.error('Failed to fetch products:', err);
         setLoading(false);
       });
   }, []);
 
-  // Fallback demo category cards if DB is initially empty
-  const defaultCategoryShowcase = [
-    { name: 'Nursery & Cribs', slug: 'nursery', count: 'Organically Crafted', image: '/images/hero.jpg' },
-    { name: 'Organic Apparel', slug: 'clothing', count: '100% Pure Cotton', image: '/images/care.jpg' },
-    { name: 'Bath & Gentle Care', slug: 'care', count: 'Dermatologist Tested', image: '/images/care.jpg' },
-    { name: 'Strollers & Travel', slug: 'strollers', count: 'Safety Certified', image: '/images/hero.jpg' },
-    { name: 'Feeding & Nursing', slug: 'feeding', count: 'BPA-Free Essentials', image: '/images/care.jpg' }
+  // Category Sections Definition
+  const sectionDefs = [
+    { title: 'Nursery & Furniture', slug: 'baby-furniture', desc: 'Solid pinewood cribs, cots & nursery glider chairs', icon: '🪑' },
+    { title: 'Organic Apparel', slug: 'baby-clothing', desc: 'GOTS-certified rompers, muslin swaddles & gift sets', icon: '👗' },
+    { title: 'Feeding & Gear', slug: 'feeding-nursing', desc: 'Anti-colic glass bottles, sterilisers & weaning sets', icon: '🍼' },
+    { title: 'Strollers & Travel', slug: 'strollers-travel', desc: 'UltraFold strollers, 3-in-1 travel systems & car seats', icon: '🛒' },
+    { title: 'Bath & Skincare', slug: 'bath-skincare', desc: 'Tear-free shampoo, cradle cap oil, body lotion & bath sets', icon: '🛁' }
   ];
 
-  const categoriesToRender = categories.length > 0 ? categories : defaultCategoryShowcase;
+  // Helper to get products for a section
+  const getProductsForSlug = (slug) => {
+    return allProducts.filter((p) => p.category?.slug === slug || p.categorySlug === slug);
+  };
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-slate-800 flex flex-col justify-between">
@@ -57,8 +60,9 @@ export default function Home() {
           content="Discover 100% organic apparel, safety-certified nursery furniture, dermatologist-tested baby skincare, and BPA-free feeding gear at NK Enterprises." 
         />
       </Helmet>
+
       {/* Main Content */}
-      <main className="flex-1 space-y-12 pb-16">
+      <main className="flex-1 space-y-14 pb-16">
         {/* Hero Section */}
         <section className="relative max-w-7xl mx-auto mt-6 px-4 sm:px-6 lg:px-8">
           <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#F6F0E6] via-[#FAF6EE] to-[#EBF5F7] p-8 lg:p-14 border border-amber-100/80 shadow-sm grid md:grid-cols-2 items-center gap-8">
@@ -121,7 +125,7 @@ export default function Home() {
                 <Truck size={24} />
               </div>
               <div>
-                <h4 className="font-bold text-sm text-slate-900">Free Shipping $50+</h4>
+                <h4 className="font-bold text-sm text-slate-900">Free Shipping ₹999+</h4>
                 <p className="text-xs text-slate-500">Fast delivery across India</p>
               </div>
             </div>
@@ -155,118 +159,79 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Category Showcase Grid */}
+        {/* Category Navigation Bar */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold font-heading text-slate-900">Shop by Category</h2>
-              <p className="text-slate-500 text-sm mt-1">Discover items specially designed for your baby's growth stages</p>
+              <p className="text-slate-500 text-sm mt-1">Explore certified safe products for every stage of your baby's growth</p>
             </div>
             <Link to="/products" className="text-[#2D6A75] font-semibold text-sm flex items-center gap-1 hover:underline">
-              View All <ChevronRight size={16} />
+              View All Catalog <ChevronRight size={16} />
             </Link>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-            {categoriesToRender.map((cat, idx) => (
+            {sectionDefs.map((sec, idx) => (
               <Link 
-                key={cat._id || idx} 
-                to={`/products?category=${cat.slug}`}
-                className="bg-white p-5 rounded-2xl border border-slate-100 hover:border-teal-200 hover:shadow-lg transition-all flex flex-col justify-between h-44 group"
+                key={sec.slug} 
+                to={`/products?category=${sec.slug}`}
+                className="bg-white p-5 rounded-2xl border border-slate-100 hover:border-teal-300 hover:shadow-md transition-all flex flex-col justify-between h-40 group"
               >
-                <div className="w-12 h-12 rounded-xl bg-teal-50 text-[#2D6A75] font-bold flex items-center justify-center text-lg mb-2">
-                  {cat.name?.[0]?.toUpperCase() || 'B'}
-                </div>
+                <div className="text-3xl mb-1">{sec.icon}</div>
                 <div>
-                  <h3 className="font-bold text-base text-slate-900 group-hover:text-[#2D6A75] transition-colors line-clamp-1">{cat.name}</h3>
-                  <p className="text-xs text-slate-400 font-medium mt-0.5">{cat.description || cat.count || 'Explore items'}</p>
+                  <h3 className="font-bold text-base text-slate-900 group-hover:text-[#2D6A75] transition-colors">{sec.title}</h3>
+                  <p className="text-xs text-slate-400 font-medium mt-0.5 line-clamp-1">{sec.desc}</p>
                 </div>
-                <div className="self-end p-1.5 bg-slate-50 rounded-full text-slate-400 group-hover:bg-[#2D6A75] group-hover:text-white transition-colors">
-                  <ChevronRight size={14} />
+                <div className="self-end text-xs font-bold text-[#2D6A75] flex items-center gap-0.5 group-hover:translate-x-1 transition-transform">
+                  <span>Explore</span> <ChevronRight size={14} />
                 </div>
               </Link>
             ))}
           </div>
         </section>
 
-        {/* Featured Products Showcase */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-bold font-heading text-slate-900">Featured Products</h2>
-              <p className="text-slate-500 text-sm mt-1">Handpicked bestsellers loved by parents everywhere</p>
-            </div>
-            <Link to="/products" className="text-[#2D6A75] font-semibold text-sm flex items-center gap-1 hover:underline">
-              Explore All <ChevronRight size={16} />
-            </Link>
-          </div>
+        {/* Individual Category Sections Showcase */}
+        {sectionDefs.map((sec) => {
+          const secProducts = getProductsForSlug(sec.slug);
+          return (
+            <section key={sec.slug} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex items-center justify-between mb-6 border-b border-slate-200/80 pb-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-3xl">{sec.icon}</span>
+                  <div>
+                    <h2 className="text-2xl sm:text-3xl font-extrabold font-heading text-slate-900">{sec.title}</h2>
+                    <p className="text-slate-500 text-xs sm:text-sm mt-0.5">{sec.desc}</p>
+                  </div>
+                </div>
+                <Link 
+                  to={`/products?category=${sec.slug}`}
+                  className="text-[#2D6A75] font-bold text-xs sm:text-sm flex items-center gap-1 hover:underline bg-teal-50 px-3.5 py-1.5 rounded-full border border-teal-100"
+                >
+                  View All {sec.title} <ChevronRight size={15} />
+                </Link>
+              </div>
 
-          {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[1, 2, 4, 4].map((n, i) => (
-                <div key={i} className="bg-white rounded-2xl h-80 animate-pulse border border-slate-100"></div>
-              ))}
-            </div>
-          ) : featuredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {featuredProducts.map((product) => (
-                <ProductCard key={product._id} product={product} />
-              ))}
-            </div>
-          ) : (
-            // Demo fallback products if database is empty initially
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <ProductCard product={{
-                _id: 'demo1',
-                name: 'Gentle Organic Chamomile Baby Lotion',
-                slug: 'organic-baby-lotion',
-                price: 29.99,
-                discountPrice: 24.99,
-                ratingsAverage: 4.9,
-                numReviews: 142,
-                ageGroup: '0-6m',
-                images: ['/images/care.jpg'],
-                category: { name: 'Bath & Skincare' }
-              }} />
-              <ProductCard product={{
-                _id: 'demo2',
-                name: 'Pure Soft Organic Wooden Convertible Crib',
-                slug: 'wooden-crib',
-                price: 399.00,
-                discountPrice: 349.00,
-                ratingsAverage: 5.0,
-                numReviews: 89,
-                ageGroup: '0-6m',
-                images: ['/images/hero.jpg'],
-                category: { name: 'Nursery & Furniture' }
-              }} />
-              <ProductCard product={{
-                _id: 'demo3',
-                name: 'Ultra-Comfort Ergonomic Baby Carrier',
-                slug: 'baby-carrier',
-                price: 99.00,
-                discountPrice: 89.50,
-                ratingsAverage: 4.8,
-                numReviews: 96,
-                ageGroup: '6-12m',
-                images: ['/images/hero.jpg'],
-                category: { name: 'Strollers & Travel' }
-              }} />
-              <ProductCard product={{
-                _id: 'demo4',
-                name: '100% Pure Organic Cotton Newborn Swaddle',
-                slug: 'organic-swaddle',
-                price: 34.99,
-                discountPrice: 29.99,
-                ratingsAverage: 4.9,
-                numReviews: 210,
-                ageGroup: '0-6m',
-                images: ['/images/care.jpg'],
-                category: { name: 'Organic Apparel' }
-              }} />
-            </div>
-          )}
-        </section>
+              {loading ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {[1, 2, 3, 4].map((n) => (
+                    <div key={n} className="bg-white rounded-2xl h-80 animate-pulse border border-slate-100"></div>
+                  ))}
+                </div>
+              ) : secProducts.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {secProducts.map((product) => (
+                    <ProductCard key={product._id} product={product} />
+                  ))}
+                </div>
+              ) : (
+                <div className="bg-white p-6 rounded-2xl text-center text-slate-400 text-sm">
+                  Loading section items...
+                </div>
+              )}
+            </section>
+          );
+        })}
       </main>
     </div>
   );

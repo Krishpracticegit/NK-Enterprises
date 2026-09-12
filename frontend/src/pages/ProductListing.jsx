@@ -37,14 +37,34 @@ export default function ProductListing() {
   const [minPriceInput, setMinPriceInput] = useState(currentMinPrice);
   const [maxPriceInput, setMaxPriceInput] = useState(currentMaxPrice);
 
+  const categoryTitleMap = {
+    'baby-furniture': 'Nursery & Furniture',
+    'nursery': 'Nursery & Furniture',
+    'nursery-cribs': 'Nursery & Furniture',
+    'baby-clothing': 'Organic Apparel',
+    'apparel': 'Organic Apparel',
+    'feeding-nursing': 'Feeding & Gear',
+    'feeding': 'Feeding & Gear',
+    'strollers-travel': 'Strollers & Travel',
+    'strollers': 'Strollers & Travel',
+    'bath-skincare': 'Bath & Skincare',
+    'bath': 'Bath & Skincare'
+  };
+
+  const activeCategoryTitle = currentCategory
+    ? (categoryTitleMap[currentCategory.toLowerCase()] ||
+       categories.find(c => c.slug === currentCategory)?.name ||
+       currentCategory.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '))
+    : '';
+
   const pageTitle = currentCategory 
-    ? `${currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)} - Baby Care | NK Enterprises`
+    ? `${activeCategoryTitle} - Baby Care | NK Enterprises`
     : currentSearch 
     ? `Search Results for "${currentSearch}" | NK Enterprises`
     : `All Baby Products - Nursery, Apparel & Care | NK Enterprises`;
 
   const pageDescription = currentCategory
-    ? `Explore certified safe and organic ${currentCategory} essentials for your baby at NK Enterprises. Top quality & pediatrician approved.`
+    ? `Explore certified safe and organic ${activeCategoryTitle} essentials for your baby at NK Enterprises. Top quality & pediatrician approved.`
     : `Browse our complete collection of certified organic baby clothing, cribs, skincare, and feeding gear at NK Enterprises.`;
 
   useEffect(() => {
@@ -120,7 +140,7 @@ export default function ProductListing() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
         <div>
           <h1 className="text-3xl font-extrabold font-heading text-slate-900">
-            {currentSearch ? `Search Results for "${currentSearch}"` : 'All Baby Products'}
+            {currentSearch ? `Search Results for "${currentSearch}"` : currentCategory ? activeCategoryTitle : 'All Baby Products'}
           </h1>
           <p className="text-slate-500 text-sm mt-1">
             Showing {totalResults} certified safe & organic products
@@ -205,7 +225,7 @@ export default function ProductListing() {
 
           {/* Price Range */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Price Range ($)</label>
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Price Range (₹)</label>
             <form onSubmit={handlePriceApply} className="space-y-2">
               <div className="flex items-center gap-2">
                 <input

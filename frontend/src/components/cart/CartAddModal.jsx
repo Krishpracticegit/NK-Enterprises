@@ -41,14 +41,14 @@ export default function CartAddModal({ item, itemCount, subtotal, onClose }) {
         />
         <div className="flex-1 min-w-0">
           <h4 className="font-bold text-slate-900 text-sm line-clamp-1">{item.name}</h4>
-          <p className="text-xs text-slate-500 mt-0.5">Qty: {item.quantity} • ${item.price}</p>
-          <p className="text-xs font-extrabold text-[#2D6A75] mt-1">${(item.price * item.quantity).toFixed(2)}</p>
+          <p className="text-xs text-slate-500 mt-0.5">Qty: {item.quantity} • ₹{item.price?.toLocaleString('en-IN')}</p>
+          <p className="text-xs font-extrabold text-[#2D6A75] mt-1">₹{(item.price * item.quantity).toLocaleString('en-IN')}</p>
         </div>
       </div>
 
       <div className="bg-amber-50/60 p-3 rounded-2xl border border-amber-100 flex items-center justify-between text-xs mb-4">
         <span className="text-slate-600 font-semibold">Cart Total ({itemCount} items):</span>
-        <span className="font-extrabold text-slate-900">${subtotal.toFixed(2)}</span>
+        <span className="font-extrabold text-slate-900">₹{subtotal?.toLocaleString('en-IN')}</span>
       </div>
 
       <div className="grid grid-cols-2 gap-2">

@@ -28,7 +28,7 @@ export default function Cart() {
     );
   }
 
-  const shippingEstimate = subtotal >= 50 ? 0 : 5.99;
+  const shippingEstimate = subtotal >= 999 ? 0 : 99;
   const grandTotal = subtotal + shippingEstimate;
 
   const handleProceedToCheckout = () => {
@@ -67,7 +67,7 @@ export default function Cart() {
                   <Link to={`/products/${item.product.slug}`} className="font-bold text-slate-900 text-sm sm:text-base hover:text-[#2D6A75] transition-colors line-clamp-2">
                     {item.name}
                   </Link>
-                  <p className="text-sm font-extrabold text-[#2D6A75] mt-1">${item.price}</p>
+                  <p className="text-sm font-extrabold text-[#2D6A75] mt-1">₹{item.price?.toLocaleString('en-IN')}</p>
                 </div>
               </div>
 
@@ -93,7 +93,7 @@ export default function Cart() {
 
                 {/* Line Item Price */}
                 <span className="font-extrabold text-slate-900 text-base sm:w-20 text-right">
-                  ${(item.price * item.quantity).toFixed(2)}
+                  ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                 </span>
 
                 {/* Remove Button */}
@@ -116,24 +116,24 @@ export default function Cart() {
           <div className="space-y-2.5 text-sm text-slate-600">
             <div className="flex justify-between">
               <span>Subtotal</span>
-              <span className="font-bold text-slate-900">${subtotal.toFixed(2)}</span>
+              <span className="font-bold text-slate-900">₹{subtotal.toLocaleString('en-IN')}</span>
             </div>
             <div className="flex justify-between">
               <span>Shipping Estimate</span>
               <span className="font-bold text-slate-900">
-                {shippingEstimate === 0 ? <span className="text-emerald-600 font-bold">FREE</span> : `$${shippingEstimate.toFixed(2)}`}
+                {shippingEstimate === 0 ? <span className="text-emerald-600 font-bold">FREE</span> : `₹${shippingEstimate}`}
               </span>
             </div>
-            {subtotal < 50 && (
+            {subtotal < 999 && (
               <p className="text-[11px] text-amber-700 bg-amber-50 p-2 rounded-xl border border-amber-200">
-                Add <strong>${(50 - subtotal).toFixed(2)}</strong> more for Free Shipping!
+                Add <strong>₹{(999 - subtotal).toLocaleString('en-IN')}</strong> more for Free Shipping!
               </p>
             )}
           </div>
 
           <div className="border-t border-slate-100 pt-3 flex justify-between text-base font-extrabold text-slate-900">
             <span>Total Amount</span>
-            <span className="text-[#2D6A75] text-xl">${grandTotal.toFixed(2)}</span>
+            <span className="text-[#2D6A75] text-xl">₹{grandTotal.toLocaleString('en-IN')}</span>
           </div>
 
           <button

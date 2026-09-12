@@ -6,6 +6,7 @@ import ProductCard from '../components/product/ProductCard.jsx';
 import { useCart } from '../context/CartContext.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useWishlist } from '../context/WishlistContext.jsx';
+import { getOptimizedImageUrl } from '../utils/imageUtils.js';
 import { 
   Star, 
   ShoppingBag, 
@@ -102,6 +103,12 @@ export default function ProductDetail() {
       // Refresh reviews & product data for updated rating
       fetchReviews(product._id);
       API.get(`/products/${slug}`).then((res) => setProduct(res.data));
+    } catch (err) {
+      setReviewError(err.response?.data?.message || 'Failed to submit review. Please try again.');
+      setSubmittingReview(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-16 flex items-center justify-center text-slate-400">
@@ -123,6 +130,7 @@ export default function ProductDetail() {
 
   const isLiked = isInWishlist(product._id);
   const finalPrice = product.discountPrice > 0 ? product.discountPrice : product.price;
+  const originalPrice = product.discountPrice > 0 ? product.price : null;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -139,7 +147,7 @@ export default function ProductDetail() {
         <div className="space-y-4">
           <div className="aspect-4/3 rounded-3xl overflow-hidden bg-slate-100 border border-slate-200 shadow-sm relative">
             <img 
-              src={getOptimizedImageUrl(product.images?.[activeImage] || '/images/hero.jpg', 800)} 
+              src={getOptimizedImageUrl(product.images?.[activeImage], 800, product.name, product.category?.name)} 
               alt={product.name}
               className="w-full h-full object-cover"
               loading="eager"
@@ -187,10 +195,10 @@ export default function ProductDetail() {
 
           <div className="flex items-baseline gap-3 border-y border-slate-100 py-4">
             <span className="text-3xl font-extrabold text-slate-900">
-              ${finalPrice}
+              ₹{finalPrice?.toLocaleString('en-IN') || finalPrice}
             </span>
             {originalPrice && (
-              <span className="text-lg text-slate-400 line-through">${originalPrice}</span>
+              <span className="text-lg text-slate-400 line-through">₹{originalPrice?.toLocaleString('en-IN') || originalPrice}</span>
             )}
             <span className="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full ml-auto">
               In Stock ({product.stock} available)
@@ -227,7 +235,7 @@ export default function ProductDetail() {
                 className="flex-1 bg-[#2D6A75] hover:bg-[#1F4D55] active:scale-98 text-white py-4 rounded-full font-bold text-sm sm:text-base shadow-lg shadow-[#2D6A75]/25 flex items-center justify-center gap-2 transition-all"
               >
                 <ShoppingBag size={20} />
-                <span>Add to Cart — ${(finalPrice * quantity).toFixed(2)}</span>
+                <span>Add to Cart — ₹{(finalPrice * quantity).toLocaleString('en-IN')}</span>
               </button>
               <button 
                 onClick={() => toggleWishlist(product)}

@@ -194,10 +194,10 @@ export default function Products() {
                     <div className="flex items-center justify-between pt-3 border-t border-slate-100">
                       <div>
                         <span className="text-xl font-extrabold text-slate-900">
-                          ${prod.discountPrice > 0 ? prod.discountPrice : prod.price}
+                          ₹{(prod.discountPrice > 0 ? prod.discountPrice : prod.price)?.toLocaleString('en-IN')}
                         </span>
                         {prod.discountPrice > 0 && (
-                          <span className="text-xs text-slate-400 line-through ml-2">${prod.price}</span>
+                          <span className="text-xs text-slate-400 line-through ml-2">₹{prod.price?.toLocaleString('en-IN')}</span>
                         )}
                       </div>
                       <button

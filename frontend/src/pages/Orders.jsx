@@ -71,17 +71,17 @@ export default function Orders() {
                     </div>
                     <div>
                       <p className="font-bold text-slate-900">{item.name}</p>
-                      <p className="text-xs text-slate-500">Qty: {item.quantity} × ${item.price}</p>
+                      <p className="text-xs text-slate-500">Qty: {item.quantity} × ₹{item.price?.toLocaleString('en-IN')}</p>
                     </div>
                   </div>
-                  <span className="font-bold text-slate-900">${(item.price * item.quantity).toFixed(2)}</span>
+                  <span className="font-bold text-slate-900">₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
                 </div>
               ))}
             </div>
 
             <div className="flex items-center justify-between pt-4 border-t border-slate-100 text-sm">
               <span className="text-slate-500 text-xs">Payment Method: <strong>{order.paymentMethod}</strong></span>
-              <span className="text-lg font-extrabold text-slate-900">Total: <span className="text-[#2D6A75]">${order.totalPrice.toFixed(2)}</span></span>
+              <span className="text-lg font-extrabold text-slate-900">Total: <span className="text-[#2D6A75]">₹{order.totalPrice?.toLocaleString('en-IN')}</span></span>
             </div>
           </div>
         ))}
