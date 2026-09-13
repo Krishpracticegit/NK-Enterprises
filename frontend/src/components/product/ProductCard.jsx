@@ -68,8 +68,12 @@ export default function ProductCard({ product }) {
           </Link>
           <div className="flex items-center gap-1 mt-1.5 text-amber-500 text-xs font-semibold">
             <Star size={14} className="fill-amber-400 text-amber-400" />
-            <span>{product.ratingsAverage || 4.9}</span>
-            <span className="text-slate-400 font-normal">({product.numReviews || 14})</span>
+            <span>{product.ratingsAverage ? Number(product.ratingsAverage).toFixed(1) : '5.0'}</span>
+            <span className="text-slate-400 font-normal">
+              {product.numReviews !== undefined && product.numReviews !== null
+                ? `(${product.numReviews})`
+                : '(0)'}
+            </span>
           </div>
         </div>
 

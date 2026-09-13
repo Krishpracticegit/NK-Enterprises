@@ -29,10 +29,10 @@ export default function Footer() {
             <h4 className="font-bold text-sm text-slate-900 uppercase tracking-wider mb-4">Quick Links</h4>
             <ul className="space-y-2.5 text-sm">
               <li><Link to="/products" className="hover:text-[#2D6A75] transition-colors">Shop All Products</Link></li>
-              <li><Link to="/products?category=baby-furniture" className="hover:text-[#2D6A75] transition-colors">Nursery Essentials</Link></li>
-              <li><Link to="/products?category=baby-clothing" className="hover:text-[#2D6A75] transition-colors">Organic Apparel</Link></li>
-              <li><Link to="/products?category=bath-skincare" className="hover:text-[#2D6A75] transition-colors">Baby Skincare</Link></li>
-              <li><Link to="/store-info" className="text-[#2D6A75] font-bold hover:underline flex items-center gap-1">Visit Our Store</Link></li>
+              <li><Link to="/products?category=baby-walkers" className="hover:text-[#2D6A75] transition-colors">Baby Walkers</Link></li>
+              <li><Link to="/products?category=baby-bottles" className="hover:text-[#2D6A75] transition-colors">Baby Bottles</Link></li>
+              <li><span className="text-slate-400 cursor-not-allowed">Apparel & Gear <span className="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-bold ml-1">Available Soon</span></span></li>
+              <li><Link to="/store-info" className="text-[#2D6A75] font-bold hover:underline flex items-center gap-1 mt-1">Visit Our Store</Link></li>
             </ul>
           </div>
 
@@ -54,7 +54,7 @@ export default function Footer() {
               <p className="font-bold flex items-center gap-1.5 text-slate-900">
                 <MapPin size={14} className="text-[#2D6A75]" /> NK ENTERPRISES Flagship Store
               </p>
-              <p className="text-slate-600 pl-5">123 Baby Care Avenue, Commercial Hub, India</p>
+              <p className="text-slate-600 pl-5 font-semibold">5/2 street-09 Geeta colony , Delhi-110031</p>
               <p className="flex items-center gap-1.5 text-slate-600 pl-5 pt-1">
                 <Clock size={13} /> Mon - Sat: 10:00 AM - 8:30 PM
               </p>

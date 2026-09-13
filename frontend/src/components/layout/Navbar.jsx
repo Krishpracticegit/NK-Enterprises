@@ -242,14 +242,12 @@ export default function Navbar() {
 
       {/* Navigation Shortcuts */}
       <nav className="border-t border-slate-100 bg-amber-50/40 px-4 py-2.5 overflow-x-auto scrollbar-none">
-        <div className="max-w-7xl mx-auto flex items-center justify-start md:justify-center gap-8 text-xs sm:text-sm font-semibold text-slate-700 whitespace-nowrap">
+        <div className="max-w-7xl mx-auto flex items-center justify-start md:justify-center gap-6 text-xs sm:text-sm font-semibold text-slate-700 whitespace-nowrap">
           <Link to="/" className="hover:text-[#2D6A75] transition-colors">Home</Link>
-          <Link to="/products" className="hover:text-[#2D6A75] transition-colors">All Baby Products</Link>
-          <Link to="/products?category=baby-furniture" className="hover:text-[#2D6A75] transition-colors">Nursery & Furniture</Link>
-          <Link to="/products?category=baby-clothing" className="hover:text-[#2D6A75] transition-colors">Organic Apparel</Link>
-          <Link to="/products?category=feeding-nursing" className="hover:text-[#2D6A75] transition-colors">Feeding & Gear</Link>
-          <Link to="/products?category=strollers-travel" className="hover:text-[#2D6A75] transition-colors">Strollers & Travel</Link>
-          <Link to="/products?category=bath-skincare" className="hover:text-[#2D6A75] transition-colors">Bath & Skincare</Link>
+          <Link to="/products" className="hover:text-[#2D6A75] transition-colors">All Products</Link>
+          <Link to="/products?category=baby-walkers" className="text-[#2D6A75] font-bold hover:underline">Baby Walkers</Link>
+          <Link to="/products?category=baby-bottles" className="text-[#2D6A75] font-bold hover:underline">Baby Bottles</Link>
+          <span className="text-slate-400 text-xs">Apparel & Gear <span className="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.5 rounded font-bold">Available Soon</span></span>
           <Link to="/store-info" className="text-amber-800 hover:text-amber-900 font-bold flex items-center gap-1">
             <MapPin size={13} /> Visit Our Store
           </Link>

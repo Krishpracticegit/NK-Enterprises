@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import Category from "./src/models/Category.js";
 import Product from "./src/models/Product.js";
 import Coupon from "./src/models/Coupon.js";
+import StoreSettings from "./src/models/StoreSettings.js";
 
 dotenv.config();
 
@@ -11,348 +12,114 @@ dotenv.config();
 // ─────────────────────────────────────────────────────────
 const categoriesData = [
   {
-    name: "Baby Furniture",
-    slug: "baby-furniture",
-    description: "Cribs, bassinets, changing tables & nursery furniture",
-    image: "/images/img1.png"
-  },
-  {
-    name: "Organic Apparel",
-    slug: "baby-clothing",
-    description: "100% organic cotton rompers, swaddles, jhablas & mittens",
-    image: "/images/img4.webp"
-  },
-  {
-    name: "Feeding & Gear",
-    slug: "feeding-nursing",
-    description: "Anti-colic bottles, sterilisers, weaning sets & breast pumps",
-    image: "/images/img8.jpg"
-  },
-  {
-    name: "Strollers & Travel",
-    slug: "strollers-travel",
-    description: "Lightweight strollers, 3-in-1 travel systems & car seats",
+    name: "Baby Walkers",
+    slug: "baby-walkers",
+    description: "Safe, anti-rollover & interactive activity walkers for babies",
     image: "/images/img10.webp"
   },
   {
-    name: "Bath & Skincare",
-    slug: "bath-skincare",
-    description: "Tear-free washes, cradle cap oils, body lotions & bath gift sets",
-    image: "/images/img14.jpg"
+    name: "Baby Bottles",
+    slug: "baby-bottles",
+    description: "BPA-free anti-colic glass & silicone feeding bottles for infants",
+    image: "/images/img8.jpg"
   }
 ];
 
 // ─────────────────────────────────────────────────────────
-//  PRODUCTS (User Specified Catalog)
+//  PRODUCTS (User Specified Catalog: Baby Walkers & Baby Bottles)
 // ─────────────────────────────────────────────────────────
 const productsData = [
-  // ━━━ 1. NURSERY & FURNITURE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // ━━━ 1. BABY WALKERS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   {
-    name: "Nordic 4-in-1 Convertible Pinewood Crib",
-    slug: "nordic-4in1-convertible-pinewood-crib",
-    description: "Solid pinewood crib with adjustable mattress height; converts to a toddler bed and daybed as your child grows",
-    price: 14999,
-    discountPrice: 12999,
-    categorySlug: "baby-furniture",
-    images: ["/images/img1.png"],
+    name: "Ergonomic Anti-Rollover Baby Walker with Adjustable Height",
+    slug: "ergonomic-anti-rollover-baby-walker-adjustable-height",
+    description: "Padded 3D breathable seat cushion, 3-level height adjustment, and silent 360-degree swivel wheels.",
+    price: 4299,
+    discountPrice: 3699,
+    categorySlug: "baby-walkers",
+    images: ["/images/img9.jpg"],
     stock: 15,
-    ageGroup: "1-3y",
-    brand: "Nordic Nursery",
+    ageGroup: "6-12m",
+    brand: "SafeStep Baby",
     ratingsAverage: 4.9,
-    numReviews: 42,
+    numReviews: 24,
     isFeatured: true
   },
   {
-    name: "Soft-Close Nursery Glider Rocking Chair",
-    slug: "soft-close-nursery-glider-rocking-chair",
-    description: "Cushioned glider with matching ottoman, smooth soft-close motion for late-night feeds",
-    price: 14499,
-    discountPrice: 12499,
-    categorySlug: "baby-furniture",
-    images: ["/images/baby-crib.jpg"],
+    name: "Wooden Push & Learn Baby Learning Walker",
+    slug: "wooden-push-learn-baby-learning-walker",
+    description: "Crafted from eco-friendly premium wood with sorting blocks, xylophone, and non-slip rubber edges.",
+    price: 2999,
+    discountPrice: 2499,
+    categorySlug: "baby-walkers",
+    images: ["/images/baby-stroller.jpg"],
     stock: 12,
+    ageGroup: "1-3y",
+    brand: "EcoBaby",
+    ratingsAverage: 4.7,
+    numReviews: 15,
+    isFeatured: false
+  },
+  {
+    name: "Foldable Multi-Speed Baby Walker with Soft Cushion",
+    slug: "foldable-multi-speed-baby-walker-soft-cushion",
+    description: "Ultra-compact folding walker for easy travel, washable seat pad, and soft toy bar.",
+    price: 2799,
+    discountPrice: 2299,
+    categorySlug: "baby-walkers",
+    images: ["/images/img10.webp"],
+    stock: 20,
+    ageGroup: "6-12m",
+    brand: "NK Enterprises",
+    ratingsAverage: 4.6,
+    numReviews: 11,
+    isFeatured: false
+  },
+
+  // ━━━ 2. BABY BOTTLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  {
+    name: "BPA-Free Wide-Neck Silicone Baby Bottle (250ml)",
+    slug: "bpa-free-wide-neck-silicone-baby-bottle-250ml",
+    description: "Ultra-soft medical grade silicone body mimicking natural breastfeeding latch.",
+    price: 899,
+    discountPrice: 699,
+    categorySlug: "baby-bottles",
+    images: ["/images/img7.jpg"],
+    stock: 40,
     ageGroup: "0-6m",
-    brand: "ComfortNursery",
+    brand: "PureCare",
     ratingsAverage: 4.8,
-    numReviews: 28,
+    numReviews: 27,
     isFeatured: true
   },
   {
-    name: "Adjustable-Height Baby Cot with Storage Drawer",
-    slug: "adjustable-height-baby-cot-storage-drawer",
-    description: "Engineered wood cot with under-bed storage drawer and teething-safe rails",
-    price: 9999,
-    discountPrice: 8499,
-    categorySlug: "baby-furniture",
-    images: ["/images/img2.jpg"],
-    stock: 4,
+    name: "Thermal Insulated Stainless Steel Baby Bottle (200ml)",
+    slug: "thermal-insulated-stainless-steel-baby-bottle-200ml",
+    description: "Double-wall vacuum insulated bottle keeping milk warm for up to 6 hours with leak-proof nipple cap.",
+    price: 1299,
+    discountPrice: 999,
+    categorySlug: "baby-bottles",
+    images: ["/images/baby-feeding.jpg"],
+    stock: 18,
     ageGroup: "6-12m",
     brand: "NK Enterprises",
     ratingsAverage: 4.7,
-    numReviews: 35,
+    numReviews: 19,
     isFeatured: false
   },
   {
-    name: "Cloud & Stars Cotton Crib Mobile with Music Box",
-    slug: "cloud-stars-cotton-crib-mobile-music-box",
-    description: "Hand-stitched hanging mobile with soft chimes and a wind-up lullaby box",
-    price: 1299,
-    discountPrice: 999,
-    categorySlug: "baby-furniture",
-    images: ["/images/img3.jpg"],
-    stock: 25,
-    ageGroup: "0-6m",
-    brand: "DreamyBabies",
-    ratingsAverage: 4.9,
-    numReviews: 64,
-    isFeatured: false
-  },
-
-  // ━━━ 2. ORGANIC APPAREL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  {
-    name: "GOTS-Certified Organic Romper Set (Pack of 3)",
-    slug: "gots-certified-organic-romper-set-3pack",
-    description: "100% organic cotton rompers, breathable and gentle on newborn skin, sizes 0–12 months",
-    price: 1299,
-    discountPrice: 1099,
-    categorySlug: "baby-clothing",
-    images: ["/images/img4.webp"],
-    stock: 35,
-    ageGroup: "6-12m",
-    brand: "OrganicKids",
-    ratingsAverage: 4.8,
-    numReviews: 88,
-    isFeatured: true
-  },
-  {
-    name: "Organic Muslin Swaddle Wrap (Set of 2)",
-    slug: "organic-muslin-swaddle-wrap-2pack",
-    description: "Soft, breathable muslin wraps for swaddling and everyday use",
-    price: 899,
-    discountPrice: 699,
-    categorySlug: "baby-clothing",
-    images: ["/images/img6.webp"],
-    stock: 40,
-    ageGroup: "0-6m",
-    brand: "GreenSprout",
-    ratingsAverage: 4.9,
-    numReviews: 112,
-    isFeatured: true
-  },
-  {
-    name: "Newborn Jhabla & Pyjama Gift Set",
-    slug: "newborn-jhabla-pyjama-gift-set",
-    description: "5-piece organic cotton gift set — jhabla, pyjama, cap, mittens, and booties",
-    price: 1599,
-    discountPrice: 1299,
-    categorySlug: "baby-clothing",
-    images: ["/images/img5.webp"],
-    stock: 20,
-    ageGroup: "0-6m",
-    brand: "NK Organic",
-    ratingsAverage: 4.7,
-    numReviews: 45,
-    isFeatured: false
-  },
-  {
-    name: "Organic Cotton Booties & Mittens Combo",
-    slug: "organic-cotton-booties-mittens-combo",
-    description: "Ribbed-ankle booties and scratch-proof mittens for infants 0–6 months",
-    price: 399,
-    discountPrice: 299,
-    categorySlug: "baby-clothing",
-    images: ["/images/baby-clothing.jpg"],
-    stock: 5,
-    ageGroup: "0-6m",
-    brand: "LittleToes",
-    ratingsAverage: 4.6,
-    numReviews: 29,
-    isFeatured: false
-  },
-
-  // ━━━ 3. FEEDING & GEAR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  {
-    name: "Anti-Colic Glass Feeding Bottle Set (Pack of 3)",
-    slug: "anti-colic-glass-feeding-bottle-set-3pack",
-    description: "BPA-free glass bottles with anti-colic vent system, 125ml/250ml sizes",
-    price: 1799,
-    discountPrice: 1499,
-    categorySlug: "feeding-nursing",
+    name: "Newborn Starter Feeding Bottle & Teat Set",
+    slug: "newborn-starter-feeding-bottle-teat-set",
+    description: "Complete gift set including 2 anti-colic bottles, slow-flow teats, and cleaning brush.",
+    price: 1499,
+    discountPrice: 1199,
+    categorySlug: "baby-bottles",
     images: ["/images/img8.jpg"],
-    stock: 30,
+    stock: 22,
     ageGroup: "0-6m",
     brand: "AventCare",
     ratingsAverage: 4.9,
-    numReviews: 94,
-    isFeatured: true
-  },
-  {
-    name: "6-Bottle Electric Steam Steriliser & Dryer",
-    slug: "6bottle-electric-steam-steriliser-dryer",
-    description: "Kills 99.9% germs in under 10 minutes; keeps contents sterile for 24 hours",
-    price: 3499,
-    discountPrice: 2999,
-    categorySlug: "feeding-nursing",
-    images: ["/images/img7.jpg"],
-    stock: 18,
-    ageGroup: "0-6m",
-    brand: "PureSteam",
-    ratingsAverage: 4.8,
-    numReviews: 56,
-    isFeatured: true
-  },
-  {
-    name: "Silicone Weaning Bowl & Spoon Set",
-    slug: "silicone-weaning-bowl-spoon-set",
-    description: "Suction-base bowl with soft-tip spoons for mess-free first foods",
-    price: 699,
-    discountPrice: 499,
-    categorySlug: "feeding-nursing",
-    images: ["/images/baby-feeding.jpg"],
-    stock: 50,
-    ageGroup: "6-12m",
-    brand: "BabyBites",
-    ratingsAverage: 4.7,
-    numReviews: 78,
-    isFeatured: false
-  },
-  {
-    name: "Manual Breast Pump with Storage Bags",
-    slug: "manual-breast-pump-storage-bags",
-    description: "Comfort-fit manual pump with 20 reusable breastmilk storage bags",
-    price: 1299,
-    discountPrice: 999,
-    categorySlug: "feeding-nursing",
-    images: ["/images/baby-feeding.jpg"],
-    stock: 6,
-    ageGroup: "0-6m",
-    brand: "MotherTouch",
-    ratingsAverage: 4.6,
-    numReviews: 32,
-    isFeatured: false
-  },
-
-  // ━━━ 4. STROLLERS & TRAVEL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  {
-    name: "UltraFold Lightweight Travel Stroller",
-    slug: "ultrafold-lightweight-travel-stroller",
-    description: "Under-8kg one-hand fold, 5-point harness, ideal for daily use and flights",
-    price: 6999,
-    discountPrice: 5999,
-    categorySlug: "strollers-travel",
-    images: ["/images/img10.webp"],
-    stock: 22,
-    ageGroup: "1-3y",
-    brand: "FlyBaby",
-    ratingsAverage: 4.9,
-    numReviews: 105,
-    isFeatured: true
-  },
-  {
-    name: "3-in-1 Travel System with Car Seat",
-    slug: "3in1-travel-system-with-car-seat",
-    description: "Stroller frame + infant car seat + carry cot combo, birth to 4 years",
-    price: 18999,
-    discountPrice: 15999,
-    categorySlug: "strollers-travel",
-    images: ["/images/img9.jpg"],
-    stock: 10,
-    ageGroup: "3y+",
-    brand: "OmniRide",
-    ratingsAverage: 4.9,
-    numReviews: 72,
-    isFeatured: true
-  },
-  {
-    name: "Compact Cabin-Friendly Umbrella Stroller",
-    slug: "compact-cabin-friendly-umbrella-stroller",
-    description: "Ultra-compact fold, fits carry-on luggage limits, self-standing when folded",
-    price: 4499,
-    discountPrice: 3799,
-    categorySlug: "strollers-travel",
-    images: ["/images/baby-stroller.jpg"],
-    stock: 15,
-    ageGroup: "6-12m",
-    brand: "TravelLite",
-    ratingsAverage: 4.7,
-    numReviews: 48,
-    isFeatured: false
-  },
-  {
-    name: "All-Terrain Jogging Stroller",
-    slug: "all-terrain-jogging-stroller",
-    description: "Shock-absorbing wheels with adjustable canopy and large storage basket",
-    price: 11999,
-    discountPrice: 9999,
-    categorySlug: "strollers-travel",
-    images: ["/images/baby-stroller.jpg"],
-    stock: 3,
-    ageGroup: "3y+",
-    brand: "ActiveBaby",
-    ratingsAverage: 4.8,
-    numReviews: 38,
-    isFeatured: false
-  },
-
-  // ━━━ 5. BATH & SKINCARE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  {
-    name: "Tear-Free Baby Shampoo & Body Wash (400ml)",
-    slug: "tear-free-baby-shampoo-body-wash-400ml",
-    description: "Gentle head-to-toe cleanser, paraben-free, dermatologically tested",
-    price: 399,
-    discountPrice: 299,
-    categorySlug: "bath-skincare",
-    images: ["/images/img14.jpg"],
-    stock: 60,
-    ageGroup: "0-6m",
-    brand: "PurePure",
-    ratingsAverage: 4.9,
-    numReviews: 120,
-    isFeatured: true
-  },
-  {
-    name: "Cradle Cap Care Massage Oil (200ml)",
-    slug: "cradle-cap-care-massage-oil-200ml",
-    description: "Nourishing oil blend to soften scalp scales, safe for daily massage",
-    price: 349,
-    discountPrice: 249,
-    categorySlug: "bath-skincare",
-    images: ["/images/baby-bathcare.jpg"],
-    stock: 45,
-    ageGroup: "0-6m",
-    brand: "OrganicRoots",
-    ratingsAverage: 4.8,
-    numReviews: 82,
-    isFeatured: true
-  },
-  {
-    name: "Hypoallergenic Body Lotion with Shea Butter",
-    slug: "hypoallergenic-body-lotion-shea-butter",
-    description: "24-hour moisture lock for sensitive, delicate skin",
-    price: 449,
-    discountPrice: 349,
-    categorySlug: "bath-skincare",
-    images: ["/images/care.jpg"],
-    stock: 50,
-    ageGroup: "0-6m",
-    brand: "BeGreen",
-    ratingsAverage: 4.7,
-    numReviews: 65,
-    isFeatured: false
-  },
-  {
-    name: "Organic Baby Bath Time Gift Set (4-in-1)",
-    slug: "organic-baby-bath-time-gift-set-4in1",
-    description: "Wash, lotion, oil, and powder in a reusable gift box",
-    price: 1199,
-    discountPrice: 899,
-    categorySlug: "bath-skincare",
-    images: ["/images/img11.webp"],
-    stock: 4,
-    ageGroup: "0-6m",
-    brand: "BeGreen",
-    ratingsAverage: 4.9,
-    numReviews: 54,
+    numReviews: 41,
     isFeatured: false
   }
 ];
@@ -392,11 +159,24 @@ async function seedDB() {
     await mongoose.connect(mongoUri);
     console.log("\n✅ Connected to MongoDB successfully");
 
-    console.log("\nClearing existing categories, products, and coupons...");
+    console.log("\nClearing existing categories, products, coupons, and store settings...");
     await Category.deleteMany({});
     await Product.deleteMany({});
     await Coupon.deleteMany({});
+    await StoreSettings.deleteMany({});
     console.log("✅ Cleared all existing data");
+
+    console.log("\nSeeding store settings...");
+    await StoreSettings.create({
+      storeName: "NK ENTERPRISES Flagship Store",
+      address: "5/2 street-09 Geeta colony , Delhi-110031",
+      phone: "+91 98765 43210",
+      whatsapp: "919876543210",
+      email: "support@nkenterprises.com",
+      latitude: 28.6538,
+      longitude: 77.2730
+    });
+    console.log("✅ Created store settings with updated address");
 
     console.log("\nSeeding categories...");
     const createdCategories = await Category.insertMany(categoriesData);

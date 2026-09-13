@@ -38,17 +38,15 @@ export default function ProductListing() {
   const [maxPriceInput, setMaxPriceInput] = useState(currentMaxPrice);
 
   const categoryTitleMap = {
-    'baby-furniture': 'Nursery & Furniture',
-    'nursery': 'Nursery & Furniture',
-    'nursery-cribs': 'Nursery & Furniture',
-    'baby-clothing': 'Organic Apparel',
-    'apparel': 'Organic Apparel',
-    'feeding-nursing': 'Feeding & Gear',
-    'feeding': 'Feeding & Gear',
-    'strollers-travel': 'Strollers & Travel',
-    'strollers': 'Strollers & Travel',
-    'bath-skincare': 'Bath & Skincare',
-    'bath': 'Bath & Skincare'
+    'baby-walkers': 'Baby Walkers',
+    'walkers': 'Baby Walkers',
+    'baby-bottles': 'Baby Bottles',
+    'bottles': 'Baby Bottles',
+    'baby-furniture': 'Nursery & Furniture (Available Soon)',
+    'baby-clothing': 'Organic Apparel (Available Soon)',
+    'feeding-nursing': 'Feeding & Gear (Available Soon)',
+    'strollers-travel': 'Strollers & Travel (Available Soon)',
+    'bath-skincare': 'Bath & Skincare (Available Soon)'
   };
 
   const activeCategoryTitle = currentCategory

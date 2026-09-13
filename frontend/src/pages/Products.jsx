@@ -101,6 +101,10 @@ export default function Products() {
               {categories.map((cat) => (
                 <option key={cat._id} value={cat.slug}>{cat.name}</option>
               ))}
+              <option value="baby-furniture" disabled>Nursery & Furniture (Available Soon)</option>
+              <option value="baby-clothing" disabled>Organic Apparel (Available Soon)</option>
+              <option value="strollers-travel" disabled>Strollers & Travel (Available Soon)</option>
+              <option value="bath-skincare" disabled>Bath & Skincare (Available Soon)</option>
             </select>
           </div>
 
@@ -186,8 +190,8 @@ export default function Products() {
                       </Link>
                       <div className="flex items-center gap-1 mt-2 text-amber-500 text-xs font-semibold">
                         <Star size={14} className="fill-amber-400 text-amber-400" />
-                        <span>{prod.ratingsAverage || 4.9}</span>
-                        <span className="text-slate-400 font-normal">({prod.numReviews || 12})</span>
+                        <span>{prod.ratingsAverage ? Number(prod.ratingsAverage).toFixed(1) : '5.0'}</span>
+                        <span className="text-slate-400 font-normal">({prod.numReviews ?? 0})</span>
                       </div>
                     </div>
 

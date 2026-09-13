@@ -7,7 +7,7 @@ const openingHourSchema = new mongoose.Schema({
 
 const storeSettingsSchema = new mongoose.Schema({
   storeName: { type: String, default: 'NK ENTERPRISES Flagship Store' },
-  address: { type: String, default: '123 Baby Care Avenue, Commercial Hub, Mumbai, Maharashtra 400001' },
+  address: { type: String, default: '5/2 street-09 Geeta colony , Delhi-110031' },
   phone: { type: String, default: '+91 98765 43210' },
   whatsapp: { type: String, default: '919876543210' },
   email: { type: String, default: 'support@nkenterprises.com' },

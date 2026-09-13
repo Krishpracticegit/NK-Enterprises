@@ -186,8 +186,10 @@ export default function ProductDetail() {
             </h1>
             <div className="flex items-center gap-2 mt-3 text-amber-500 text-sm font-semibold">
               <Star size={16} className="fill-amber-400 text-amber-400" />
-              <span>{product.ratingsAverage || 4.9}</span>
-              <span className="text-slate-400 font-normal">({reviews.length || product.numReviews || 0} reviews)</span>
+              <span>{product.ratingsAverage ? Number(product.ratingsAverage).toFixed(1) : '5.0'}</span>
+              <span className="text-slate-400 font-normal">
+                ({reviews.length > 0 ? reviews.length : (product.numReviews || 0)} {reviews.length === 1 || product.numReviews === 1 ? 'review' : 'reviews'})
+              </span>
               <span className="text-slate-300">•</span>
               <span className="text-slate-500 font-medium">Brand: <strong>{product.brand || 'NK Enterprises'}</strong></span>
             </div>

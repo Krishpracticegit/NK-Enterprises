@@ -39,7 +39,7 @@ export default function StoreInfo() {
 
   const defaultStore = {
     storeName: 'NK ENTERPRISES Flagship Store',
-    address: '123 Baby Care Avenue, Commercial Hub, Mumbai, Maharashtra 400001',
+    address: '5/2 street-09 Geeta colony , Delhi-110031',
     phone: '+91 98765 43210',
     whatsapp: '+91 98765 43210',
     email: 'support@nkenterprises.com',
@@ -48,12 +48,13 @@ export default function StoreInfo() {
       { day: 'Saturday', hours: '10:00 AM - 9:00 PM' },
       { day: 'Sunday', hours: '11:00 AM - 7:00 PM' }
     ],
-    latitude: 19.0760,
-    longitude: 72.8777
+    latitude: 28.6538,
+    longitude: 77.2730
   };
 
   const store = storeInfo || defaultStore;
-  const mapEmbedUrl = `https://maps.google.com/maps?q=${store.latitude || 19.0760},${store.longitude || 72.8777}&z=15&output=embed`;
+  const encodedAddress = encodeURIComponent(store.address || '5/2 street-09 Geeta colony , Delhi-110031');
+  const mapEmbedUrl = `https://maps.google.com/maps?q=${encodedAddress}&z=16&output=embed`;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
@@ -145,7 +146,7 @@ export default function StoreInfo() {
               <Navigation size={18} className="text-[#2D6A75]" /> Map Directions
             </h3>
             <a 
-              href={`https://maps.google.com/?q=${store.latitude},${store.longitude}`} 
+              href={`https://maps.google.com/?q=${encodedAddress}`} 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-xs font-bold text-[#2D6A75] hover:underline"

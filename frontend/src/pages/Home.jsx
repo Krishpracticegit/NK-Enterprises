@@ -37,13 +37,14 @@ export default function Home() {
       });
   }, []);
 
-  // Category Sections Definition
+  // Category Sections Definition (Active vs Coming Soon)
   const sectionDefs = [
-    { title: 'Nursery & Furniture', slug: 'baby-furniture', desc: 'Solid pinewood cribs, cots & nursery glider chairs', icon: '🪑' },
-    { title: 'Organic Apparel', slug: 'baby-clothing', desc: 'GOTS-certified rompers, muslin swaddles & gift sets', icon: '👗' },
-    { title: 'Feeding & Gear', slug: 'feeding-nursing', desc: 'Anti-colic glass bottles, sterilisers & weaning sets', icon: '🍼' },
-    { title: 'Strollers & Travel', slug: 'strollers-travel', desc: 'UltraFold strollers, 3-in-1 travel systems & car seats', icon: '🛒' },
-    { title: 'Bath & Skincare', slug: 'bath-skincare', desc: 'Tear-free shampoo, cradle cap oil, body lotion & bath sets', icon: '🛁' }
+    { title: 'Baby Walkers', slug: 'baby-walkers', desc: 'Safe, anti-rollover & interactive activity walkers for babies', icon: '🚼', active: true },
+    { title: 'Baby Bottles', slug: 'baby-bottles', desc: 'BPA-free anti-colic glass & silicone feeding bottles', icon: '🍼', active: true },
+    { title: 'Nursery & Furniture', slug: 'baby-furniture', desc: 'Pinewood cribs, cots & nursery gliders', icon: '🪑', active: false, availableSoon: true },
+    { title: 'Organic Apparel', slug: 'baby-clothing', desc: 'GOTS-certified rompers, swaddles & gift sets', icon: '👗', active: false, availableSoon: true },
+    { title: 'Strollers & Travel', slug: 'strollers-travel', desc: 'UltraFold strollers & 3-in-1 travel systems', icon: '🛒', active: false, availableSoon: true },
+    { title: 'Bath & Skincare', slug: 'bath-skincare', desc: 'Tear-free shampoo, body lotion & bath sets', icon: '🛁', active: false, availableSoon: true }
   ];
 
   // Helper to get products for a section
@@ -54,10 +55,10 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-slate-800 flex flex-col justify-between">
       <Helmet>
-        <title>NK Enterprises - Premium & Certified Safe Baby Care</title>
+        <title>NK Enterprises - Premium Baby Walkers & Feeding Bottles</title>
         <meta 
           name="description" 
-          content="Discover 100% organic apparel, safety-certified nursery furniture, dermatologist-tested baby skincare, and BPA-free feeding gear at NK Enterprises." 
+          content="Shop safety-certified anti-rollover Baby Walkers and BPA-free anti-colic Baby Bottles at NK Enterprises." 
         />
       </Helmet>
 
@@ -71,10 +72,10 @@ export default function Home() {
                 <Sparkles size={14} /> Certified Organic & Non-Toxic
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-heading text-slate-900 leading-tight">
-                Gentle Care for Your Baby's World.
+                Gentle Care for Your Baby's First Steps & Feeds.
               </h1>
               <p className="text-slate-600 text-base sm:text-lg leading-relaxed max-w-lg">
-                At <strong>NK ENTERPRISES</strong>, we craft & curate 100% organic clothing, ergonomic cribs, and pediatrician-tested baby skincare.
+                At <strong>NK ENTERPRISES</strong>, explore our safety-certified baby walkers and pediatrician-approved anti-colic feeding bottles.
               </p>
               <div className="flex flex-wrap items-center gap-4 pt-2">
                 <Link 
@@ -110,7 +111,7 @@ export default function Home() {
                 </div>
                 <div>
                   <p className="text-xs text-slate-500 font-medium">Safety Standard</p>
-                  <p className="text-sm font-bold text-slate-900">100% Pediatrician Approved</p>
+                  <p className="text-sm font-bold text-slate-900">100% Certified Safe & BPA-Free</p>
                 </div>
               </div>
             </div>
@@ -134,8 +135,8 @@ export default function Home() {
                 <ShieldCheck size={24} />
               </div>
               <div>
-                <h4 className="font-bold text-sm text-slate-900">100% Certified Organic</h4>
-                <p className="text-xs text-slate-500">Hypoallergenic & safe</p>
+                <h4 className="font-bold text-sm text-slate-900">100% Certified Safe</h4>
+                <p className="text-xs text-slate-500">Anti-rollover & BPA-free</p>
               </div>
             </div>
             <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-xs flex items-center gap-4">
@@ -164,29 +165,48 @@ export default function Home() {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold font-heading text-slate-900">Shop by Category</h2>
-              <p className="text-slate-500 text-sm mt-1">Explore certified safe products for every stage of your baby's growth</p>
+              <p className="text-slate-500 text-sm mt-1">Explore our active collections & upcoming catalog sections</p>
             </div>
             <Link to="/products" className="text-[#2D6A75] font-semibold text-sm flex items-center gap-1 hover:underline">
               View All Catalog <ChevronRight size={16} />
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-            {sectionDefs.map((sec, idx) => (
-              <Link 
-                key={sec.slug} 
-                to={`/products?category=${sec.slug}`}
-                className="bg-white p-5 rounded-2xl border border-slate-100 hover:border-teal-300 hover:shadow-md transition-all flex flex-col justify-between h-40 group"
-              >
-                <div className="text-3xl mb-1">{sec.icon}</div>
-                <div>
-                  <h3 className="font-bold text-base text-slate-900 group-hover:text-[#2D6A75] transition-colors">{sec.title}</h3>
-                  <p className="text-xs text-slate-400 font-medium mt-0.5 line-clamp-1">{sec.desc}</p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            {sectionDefs.map((sec) => (
+              sec.active ? (
+                <Link 
+                  key={sec.slug} 
+                  to={`/products?category=${sec.slug}`}
+                  className="bg-white p-5 rounded-2xl border border-slate-100 hover:border-teal-300 hover:shadow-md transition-all flex flex-col justify-between h-44 group relative overflow-hidden"
+                >
+                  <div className="text-3xl mb-1">{sec.icon}</div>
+                  <div>
+                    <h3 className="font-bold text-base text-slate-900 group-hover:text-[#2D6A75] transition-colors">{sec.title}</h3>
+                    <p className="text-xs text-slate-400 font-medium mt-0.5 line-clamp-1">{sec.desc}</p>
+                  </div>
+                  <div className="self-end text-xs font-bold text-[#2D6A75] flex items-center gap-0.5 group-hover:translate-x-1 transition-transform">
+                    <span>Explore</span> <ChevronRight size={14} />
+                  </div>
+                </Link>
+              ) : (
+                <div 
+                  key={sec.slug} 
+                  className="bg-slate-50/80 p-5 rounded-2xl border border-dashed border-slate-200 flex flex-col justify-between h-44 opacity-85 relative"
+                >
+                  <span className="absolute top-2 right-2 bg-amber-100 text-amber-800 font-bold text-[10px] px-2 py-0.5 rounded-full">
+                    Available Soon
+                  </span>
+                  <div className="text-3xl mb-1 grayscale opacity-70">{sec.icon}</div>
+                  <div>
+                    <h3 className="font-bold text-sm text-slate-700">{sec.title}</h3>
+                    <p className="text-[11px] text-slate-400 font-medium mt-0.5 line-clamp-1">{sec.desc}</p>
+                  </div>
+                  <div className="text-[11px] font-bold text-amber-700 italic">
+                    Available Soon
+                  </div>
                 </div>
-                <div className="self-end text-xs font-bold text-[#2D6A75] flex items-center gap-0.5 group-hover:translate-x-1 transition-transform">
-                  <span>Explore</span> <ChevronRight size={14} />
-                </div>
-              </Link>
+              )
             ))}
           </div>
         </section>
@@ -194,6 +214,31 @@ export default function Home() {
         {/* Individual Category Sections Showcase */}
         {sectionDefs.map((sec) => {
           const secProducts = getProductsForSlug(sec.slug);
+
+          if (!sec.active) {
+            return (
+              <section key={sec.slug} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="bg-gradient-to-r from-amber-50/50 via-slate-50 to-orange-50/30 p-6 sm:p-8 rounded-3xl border border-dashed border-amber-200/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <span className="text-4xl opacity-80">{sec.icon}</span>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h2 className="text-2xl font-bold font-heading text-slate-800">{sec.title}</h2>
+                        <span className="bg-amber-100 text-amber-900 text-xs font-bold px-3 py-1 rounded-full border border-amber-200">
+                          Available Soon
+                        </span>
+                      </div>
+                      <p className="text-slate-500 text-xs sm:text-sm mt-1">{sec.desc} — New items arriving soon to our Delhi flagship store!</p>
+                    </div>
+                  </div>
+                  <span className="text-xs font-bold text-amber-800 bg-amber-100/60 px-4 py-2 rounded-xl whitespace-nowrap">
+                    Coming Soon to Catalog
+                  </span>
+                </div>
+              </section>
+            );
+          }
+
           return (
             <section key={sec.slug} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex items-center justify-between mb-6 border-b border-slate-200/80 pb-4">
