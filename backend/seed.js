@@ -41,8 +41,8 @@ const productsData = [
     stock: 15,
     ageGroup: "6-12m",
     brand: "SafeStep Baby",
-    ratingsAverage: 4.9,
-    numReviews: 24,
+    ratingsAverage: 0,
+    numReviews: 0,
     isFeatured: true
   },
   {
@@ -56,8 +56,8 @@ const productsData = [
     stock: 12,
     ageGroup: "1-3y",
     brand: "EcoBaby",
-    ratingsAverage: 4.7,
-    numReviews: 15,
+    ratingsAverage: 0,
+    numReviews: 0,
     isFeatured: false
   },
   {
@@ -71,8 +71,8 @@ const productsData = [
     stock: 20,
     ageGroup: "6-12m",
     brand: "NK Enterprises",
-    ratingsAverage: 4.6,
-    numReviews: 11,
+    ratingsAverage: 0,
+    numReviews: 0,
     isFeatured: false
   },
 
@@ -88,8 +88,8 @@ const productsData = [
     stock: 40,
     ageGroup: "0-6m",
     brand: "PureCare",
-    ratingsAverage: 4.8,
-    numReviews: 27,
+    ratingsAverage: 0,
+    numReviews: 0,
     isFeatured: true
   },
   {
@@ -103,8 +103,8 @@ const productsData = [
     stock: 18,
     ageGroup: "6-12m",
     brand: "NK Enterprises",
-    ratingsAverage: 4.7,
-    numReviews: 19,
+    ratingsAverage: 0,
+    numReviews: 0,
     isFeatured: false
   },
   {
@@ -118,8 +118,8 @@ const productsData = [
     stock: 22,
     ageGroup: "0-6m",
     brand: "AventCare",
-    ratingsAverage: 4.9,
-    numReviews: 41,
+    ratingsAverage: 0,
+    numReviews: 0,
     isFeatured: false
   }
 ];

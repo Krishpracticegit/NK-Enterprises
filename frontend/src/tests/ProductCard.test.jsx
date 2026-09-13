@@ -10,13 +10,13 @@ const mockProduct = {
   _id: 'prod123',
   name: 'Organic Cotton Baby Onesie',
   slug: 'organic-cotton-baby-onesie',
-  price: 24.99,
+  price: 1499,
   discountPrice: 0,
   images: ['/images/onesie.jpg'],
   ageGroup: '0-6m',
   category: { name: 'Organic Apparel' },
-  ratingsAverage: 4.8,
-  numReviews: 12
+  ratingsAverage: 0,
+  numReviews: 0
 };
 
 const renderWithProviders = (ui) => {
@@ -36,6 +36,6 @@ describe('ProductCard Component', () => {
     renderWithProviders(<ProductCard product={mockProduct} />);
 
     expect(screen.getByText('Organic Cotton Baby Onesie')).toBeInTheDocument();
-    expect(screen.getByText(/24\.99/)).toBeInTheDocument();
+    expect(screen.getByText(/1,499/)).toBeInTheDocument();
   });
 });

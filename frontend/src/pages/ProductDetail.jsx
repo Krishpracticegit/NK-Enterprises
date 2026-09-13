@@ -184,15 +184,21 @@ export default function ProductDetail() {
             <h1 className="text-3xl sm:text-4xl font-extrabold font-heading text-slate-900 mt-3">
               {product.name}
             </h1>
-            <div className="flex items-center gap-2 mt-3 text-amber-500 text-sm font-semibold">
-              <Star size={16} className="fill-amber-400 text-amber-400" />
-              <span>{product.ratingsAverage ? Number(product.ratingsAverage).toFixed(1) : '5.0'}</span>
-              <span className="text-slate-400 font-normal">
-                ({reviews.length > 0 ? reviews.length : (product.numReviews || 0)} {reviews.length === 1 || product.numReviews === 1 ? 'review' : 'reviews'})
-              </span>
-              <span className="text-slate-300">•</span>
-              <span className="text-slate-500 font-medium">Brand: <strong>{product.brand || 'NK Enterprises'}</strong></span>
-            </div>
+            {reviews.length > 0 || product.numReviews > 0 ? (
+              <div className="flex items-center gap-2 mt-3 text-amber-500 text-sm font-semibold">
+                <Star size={16} className="fill-amber-400 text-amber-400" />
+                <span>{Number(product.ratingsAverage || 0).toFixed(1)}</span>
+                <span className="text-slate-400 font-normal">
+                  ({reviews.length > 0 ? reviews.length : product.numReviews} {reviews.length === 1 || product.numReviews === 1 ? 'review' : 'reviews'})
+                </span>
+                <span className="text-slate-300">•</span>
+                <span className="text-slate-500 font-medium">Brand: <strong>{product.brand || 'NK Enterprises'}</strong></span>
+              </div>
+            ) : (
+              <div className="mt-3 text-sm text-slate-500 font-medium">
+                Brand: <strong>{product.brand || 'NK Enterprises'}</strong>
+              </div>
+            )}
           </div>
 
           <div className="flex items-baseline gap-3 border-y border-slate-100 py-4">

@@ -188,11 +188,15 @@ export default function Products() {
                           {prod.name}
                         </h3>
                       </Link>
-                      <div className="flex items-center gap-1 mt-2 text-amber-500 text-xs font-semibold">
-                        <Star size={14} className="fill-amber-400 text-amber-400" />
-                        <span>{prod.ratingsAverage ? Number(prod.ratingsAverage).toFixed(1) : '5.0'}</span>
-                        <span className="text-slate-400 font-normal">({prod.numReviews ?? 0})</span>
-                      </div>
+                      {prod.numReviews > 0 ? (
+                        <div className="flex items-center gap-1 mt-2 text-amber-500 text-xs font-semibold">
+                          <Star size={14} className="fill-amber-400 text-amber-400" />
+                          <span>{Number(prod.ratingsAverage || 0).toFixed(1)}</span>
+                          <span className="text-slate-400 font-normal">({prod.numReviews})</span>
+                        </div>
+                      ) : (
+                        <div className="h-5 mt-2"></div>
+                      )}
                     </div>
 
                     <div className="flex items-center justify-between pt-3 border-t border-slate-100">
