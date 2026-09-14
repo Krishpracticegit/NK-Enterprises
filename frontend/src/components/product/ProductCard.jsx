@@ -66,11 +66,11 @@ export default function ProductCard({ product }) {
               {product.name}
             </h3>
           </Link>
-          {product.numReviews > 0 ? (
+          {product.reviews && product.reviews.length > 0 ? (
             <div className="flex items-center gap-1 mt-1.5 text-amber-500 text-xs font-semibold">
               <Star size={14} className="fill-amber-400 text-amber-400" />
               <span>{Number(product.ratingsAverage || 0).toFixed(1)}</span>
-              <span className="text-slate-400 font-normal">({product.numReviews})</span>
+              <span className="text-slate-400 font-normal">({product.reviews.length})</span>
             </div>
           ) : (
             <div className="h-5 mt-1.5"></div>
