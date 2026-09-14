@@ -7,7 +7,7 @@ dist/
 **/dist/
 build/
 **/build/
-
+report/
 # Environment files
 .env
 backend/.env
